@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NBIM Offshore Wind Investment Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        .header {
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 1.5rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: #1e40af;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .brand-text h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 2px;
+        }
+
+        .brand-text .subtitle {
+            font-size: 0.875rem;
+            color: #64748b;
+            font-weight: 400;
+        }
+
+        .status-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .live-indicator {
+            background: #10b981;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+
+        .last-updated {
+            font-size: 0.875rem;
+            color: #64748b;
+            text-align: right;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-title {
+            margin-bottom: 0.5rem;
+        }
+
+        .page-title h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            font-size: 1rem;
+            color: #64748b;
+            margin-bottom: 3rem;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            border: 1px solid #e2e8f0;
+            transition: box-shadow 0.2s ease;
+        }
+
+        .metric-card:hover {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .metric-label {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-secondary {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 0.75rem;
+        }
+
+        .metric-change {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .metric-change.positive {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .metric-change.negative {
+            background: #fef2f2;
+            color: #991b1b;
+        }
+
+        .chart-section {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 3rem;
+        }
+
+        .chart-header {
+            margin-bottom: 2rem;
+        }
+
+        .chart-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .chart-container {
+            height: 400px;
+            position: relative;
+        }
+
+        .allocation-section {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 3rem;
+        }
+
+        .allocation-header {
+            margin-bottom: 2rem;
+        }
+
+        .allocation-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .allocation-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .allocation-item:last-child {
+            border-bottom: none;
+        }
+
+        .allocation-bar-container {
+            flex: 1;
+            margin: 0 2rem;
+            height: 8px;
+            background: #f1f5f9;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .allocation-bar {
+            height: 100%;
+            background: #1e40af;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .allocation-label {
+            font-weight: 500;
+            color: #1e293b;
+            min-width: 120px;
+        }
+
+        .allocation-percentage {
+            font-weight: 600;
+            color: #1e293b;
+            min-width: 60px;
+            text-align: right;
+        }
+
+        .data-table-section {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 3rem;
+        }
+
+        .table-header {
+            margin-bottom: 2rem;
+        }
+
+        .table-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th {
+            background: #f8fafc;
+            padding: 1rem;
+            text-align: left;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.875rem;
+            color: #1e293b;
+        }
+
+        .data-table td:not(:first-child) {
+            text-align: right;
+        }
+
+        .text-positive {
+            color: #059669;
+        }
+
+        .text-negative {
+            color: #dc2626;
+        }
+
+        .exchange-rates-section {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 2rem;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 3rem;
+        }
+
+        .rates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .rate-item {
+            text-align: center;
+            padding: 1rem;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .rate-year {
+            font-weight: 600;
+            color: #1e40af;
+            margin-bottom: 0.25rem;
+        }
+
+        .rate-value {
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo">N</div>
+                <div class="brand-text">
+                    <h1>NBIM Portfolio</h1>
+                    <div class="subtitle">Offshore Wind & Renewable Infrastructure</div>
+                </div>
+            </div>
+            <div class="status-section">
+                <div class="live-indicator">Live</div>
+                <div class="last-updated">
+                    Last Updated<br>
+                    <strong>{{LAST_UPDATED}}</strong>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="page-title">
+            <h2>Portfolio Dashboard</h2>
+            <div class="page-subtitle">Real-time tracking of NBIM's offshore wind and renewable infrastructure investments - specialized unlisted infrastructure portfolio</div>
+        </div>
+
+        <!-- Key Metrics Grid -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-label">Total Investment</div>
+                <div class="metric-value">€{{TOTAL_INVESTMENT}}</div>
+                <div class="metric-secondary">{{TOTAL_PROJECTS}} projects committed</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-label">Total Capacity</div>
+                <div class="metric-value">{{TOTAL_CAPACITY}} MW</div>
+                <div class="metric-secondary">NBIM ownership stake</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-label">Offshore Wind</div>
+                <div class="metric-value">€{{OFFSHORE_INVESTMENT}}</div>
+                <div class="metric-secondary">{{OFFSHORE_CAPACITY}} MW capacity</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-label">Operational</div>
+                <div class="metric-value">{{OPERATIONAL_PERCENTAGE}}%</div>
+                <div class="metric-secondary">Assets generating returns</div>
+            </div>
+        </div>
+
+        <!-- Technology Allocation -->
+        <div class="allocation-section">
+            <div class="allocation-header">
+                <div class="allocation-title">Technology Allocation</div>
+            </div>
+            <div id="technologyAllocation">
+                <!-- Dynamic content -->
+            </div>
+        </div>
+
+        <!-- Geographic Allocation -->
+        <div class="allocation-section">
+            <div class="allocation-header">
+                <div class="allocation-title">Geographic Distribution</div>
+            </div>
+            <div id="geographicAllocation">
+                <!-- Dynamic content -->
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="chart-section">
+            <div class="chart-header">
+                <div class="chart-title">Investment by Year</div>
+            </div>
+            <div class="chart-container">
+                <canvas id="yearlyChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-section">
+            <div class="chart-header">
+                <div class="chart-title">Cash Flow Analysis</div>
+            </div>
+            <div class="chart-container">
+                <canvas id="cashFlowChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Exchange Rates -->
+        <div class="exchange-rates-section">
+            <div class="allocation-header">
+                <div class="allocation-title">Exchange Rate Assumptions</div>
+                <div class="metric-secondary">EUR/NOK rates used for calculations</div>
+            </div>
+            <div class="rates-grid" id="exchangeRates">
+                <!-- Dynamic content -->
+            </div>
+        </div>
+
+        <!-- Investment Details Table -->
+        <div class="data-table-section">
+            <div class="table-header">
+                <div class="table-title">Investment Details</div>
+                <div class="metric-secondary">All investment amounts converted to EUR</div>
+            </div>
+            {{INVESTMENTS_TABLE}}
+        </div>
+
+        <!-- Cashflow Table -->
+        <div class="data-table-section">
+            <div class="table-header">
+                <div class="table-title">Cash Flow Analysis</div>
+                <div class="metric-secondary">All figures in NOK millions</div>
+            </div>
+            <div id="cashflowTable">
+                <!-- Dynamic content -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chart styling
+        Chart.defaults.font.family = '-apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif';
+        Chart.defaults.font.size = 12;
+        Chart.defaults.color = '#64748b';
+
+        // Data from backend
+        const yearlyData = {{YEARLY_CHART_DATA}};
+        const technologyData = {{TECHNOLOGY_CHART_DATA}};
+        const geographyData = {{GEOGRAPHY_CHART_DATA}};
+        const cashflowData = {{CASHFLOW_CHART_DATA}};
+        const exchangeRatesData = {{EXCHANGE_RATES_DATA}};
+
+        // Generate technology allocation bars
+        function generateTechnologyAllocation() {
+            const container = document.getElementById('technologyAllocation');
+            const technologies = technologyData.labels;
+            const values = technologyData.datasets[0].data;
+            const total = values.reduce((sum, val) => sum + val, 0);
+
+            technologies.forEach((tech, index) => {
+                const percentage = ((values[index] / total) * 100).toFixed(1);
+                const item = document.createElement('div');
+                item.className = 'allocation-item';
+                item.innerHTML = `
+                    <div class="allocation-label">${tech}</div>
+                    <div class="allocation-bar-container">
+                        <div class="allocation-bar" style="width: ${percentage}%"></div>
+                    </div>
+                    <div class="allocation-percentage">${percentage}%</div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        // Generate geographic allocation bars
+        function generateGeographicAllocation() {
+            const container = document.getElementById('geographicAllocation');
+            const geographies = geographyData.labels;
+            const values = geographyData.datasets[0].data;
+            const total = values.reduce((sum, val) => sum + val, 0);
+
+            geographies.forEach((geo, index) => {
+                const percentage = ((values[index] / total) * 100).toFixed(1);
+                const item = document.createElement('div');
+                item.className = 'allocation-item';
+                item.innerHTML = `
+                    <div class="allocation-label">${geo}</div>
+                    <div class="allocation-bar-container">
+                        <div class="allocation-bar" style="width: ${percentage}%"></div>
+                    </div>
+                    <div class="allocation-percentage">${percentage}%</div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        // Generate exchange rates display
+        function generateExchangeRates() {
+            const container = document.getElementById('exchangeRates');
+            if (exchangeRatesData && exchangeRatesData.rates && exchangeRatesData.rates.NOK_EUR) {
+                Object.entries(exchangeRatesData.rates.NOK_EUR).forEach(([year, rate]) => {
+                    if (rate) {
+                        const item = document.createElement('div');
+                        item.className = 'rate-item';
+                        item.innerHTML = `
+                            <div class="rate-year">${year}</div>
+                            <div class="rate-value">${rate}</div>
+                        `;
+                        container.appendChild(item);
+                    }
+                });
+            }
+        }
+
+        // Investment by Year Chart
+        const ctx1 = document.getElementById('yearlyChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'bar',
+            data: yearlyData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    x: {
+                        grid: { display: false },
+                        border: { display: false }
+                    },
+                    y: {
+                        grid: { color: '#f1f5f9', drawBorder: false },
+                        border: { display: false },
+                        ticks: {
+                            callback: function(value) {
+                                return '€' + (value/1000).toFixed(1) + 'B';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Cash Flow Chart
+        const ctx2 = document.getElementById('cashFlowChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'line',
+            data: cashflowData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        align: 'end',
+                        labels: {
+                            boxWidth: 12,
+                            usePointStyle: true,
+                            pointStyle: 'circle'
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { display: false },
+                        border: { display: false }
+                    },
+                    y: {
+                        grid: { color: '#f1f5f9', drawBorder: false },
+                        border: { display: false },
+                        ticks: {
+                            callback: function(value) {
+                                return 'NOK ' + (value/1000).toFixed(0) + 'B';
+                            }
+                        }
+                    }
+                },
+                elements: {
+                    point: { hoverRadius: 6 },
+                    line: { tension: 0.4 }
+                }
+            }
+        });
+
+        // Initialize allocations and rates
+        generateTechnologyAllocation();
+        generateGeographicAllocation();
+        generateExchangeRates();
+    </script>
+</body>
+</html>

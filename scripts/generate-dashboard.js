@@ -53,9 +53,19 @@ class DashboardGenerator {
     try {
       const template = await fs.readFile(templatePath, 'utf8');
       
+      // Format last updated date
+      const lastUpdated = new Date(data.lastUpdated).toLocaleDateString('en-GB', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZoneName: 'short'
+      });
+      
       // Replace template variables
       return template
-        .replace(/{{LAST_UPDATED}}/g, new Date(data.lastUpdated).toLocaleDateString())
+        .replace(/{{LAST_UPDATED}}/g, lastUpdated)
         .replace(/{{TOTAL_INVESTMENT}}/g, this.formatCurrency(data.metrics.totalInvestmentEur))
         .replace(/{{TOTAL_PROJECTS}}/g, data.metrics.totalProjects.toString())
         .replace(/{{TOTAL_CAPACITY}}/g, Math.round(data.metrics.totalCapacityByStake).toString())
@@ -66,7 +76,8 @@ class DashboardGenerator {
         .replace(/{{YEARLY_CHART_DATA}}/g, JSON.stringify(this.prepareYearlyChartData(data.metrics.yearlyInvestments)))
         .replace(/{{TECHNOLOGY_CHART_DATA}}/g, JSON.stringify(this.prepareTechnologyChartData(data.metrics.technologyBreakdown)))
         .replace(/{{GEOGRAPHY_CHART_DATA}}/g, JSON.stringify(this.prepareGeographyChartData(data.metrics.geographyBreakdown)))
-        .replace(/{{CASHFLOW_CHART_DATA}}/g, JSON.stringify(this.prepareCashflowChartData(data.cashflow.fullYearData)));
+        .replace(/{{CASHFLOW_CHART_DATA}}/g, JSON.stringify(this.prepareCashflowChartData(data.cashflow.fullYearData)))
+        .replace(/{{EXCHANGE_RATES_DATA}}/g, JSON.stringify(data.exchangeRates));
         
     } catch (error) {
       // If template doesn't exist, create a basic dashboard
@@ -270,7 +281,7 @@ class DashboardGenerator {
     `).join('');
 
     return `
-      <table>
+      <table class="data-table">
         <thead>
           <tr>
             <th>Project</th>
