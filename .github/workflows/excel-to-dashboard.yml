@@ -11,6 +11,11 @@ on:
     - cron: '0 9 * * 1'  # Weekly Monday 9 AM
   workflow_dispatch:
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
   excel-to-dashboard:
     runs-on: ubuntu-latest
