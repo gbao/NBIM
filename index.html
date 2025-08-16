@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NBIM Offshore Wind Investment Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; background: #f5f7fa; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px 20px; text-align: center; margin-bottom: 30px; border-radius: 10px; }
+        .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .metric-card { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; }
+        .metric-value { font-size: 2.5rem; font-weight: bold; color: #667eea; }
+        .metric-label { color: #666; margin-top: 10px; }
+        .chart-container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 30px; }
+        .chart-wrapper { position: relative; height: 400px; }
+        .table-container { background: white; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); overflow: hidden; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; }
+        th { background: #f8f9fa; font-weight: 600; }
+        tr:hover { background: #f8f9fa; }
+        .footer { text-align: center; margin-top: 40px; color: #666; }
+        @media (max-width: 768px) { .metrics-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌊 NBIM Offshore Wind Investment Dashboard</h1>
+            <p>Comprehensive overview of renewable infrastructure investments</p>
+            <p>Last updated: 8/16/2025</p>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-value">€0</div>
+                <div class="metric-label">Total Investment</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">9</div>
+                <div class="metric-label">Total Projects</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">3310 MW</div>
+                <div class="metric-label">Total Capacity (by stake)</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">€0</div>
+                <div class="metric-label">Offshore Wind Investment</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">2044 MW</div>
+                <div class="metric-label">Offshore Wind Capacity</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">NaN%</div>
+                <div class="metric-label">Operational Assets</div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h2>📊 Investment by Year</h2>
+            <div class="chart-wrapper">
+                <canvas id="yearlyChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h2>🔧 Technology Breakdown</h2>
+            <div class="chart-wrapper">
+                <canvas id="technologyChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h2>🌍 Geographic Distribution</h2>
+            <div class="chart-wrapper">
+                <canvas id="geographyChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h2>💰 Cash Flow Analysis</h2>
+            <div class="chart-wrapper">
+                <canvas id="cashflowChart"></canvas>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <h2 style="padding: 20px;">📋 Investment Details</h2>
+            
+      <table>
+        <thead>
+          <tr>
+            <th>Project</th>
+            <th>Investment (EUR)</th>
+            <th>Original Currency</th>
+            <th>Stake</th>
+            <th>Total Capacity</th>
+            <th>NBIM Capacity</th>
+            <th>Year</th>
+            <th>Month</th>
+            <th>Technology</th>
+            <th>Geography</th>
+            <th>Operator</th>
+            <th>Acquisition Status</th>
+            <th>Current Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+      <tr>
+        <td>Borssele 1 & 2</td>
+        <td>€0M</td>
+        <td>EUR</td>
+        <td>0.5%</td>
+        <td>752 MW</td>
+        <td>376 MW</td>
+        <td>2021</td>
+        <td>April</td>
+        <td>Offshore Wind</td>
+        <td>Netherlands</td>
+        <td>Ørsted</td>
+        <td>Operational </td>
+        <td>Operational </td>
+      </tr>
+    
+      <tr>
+        <td>Iberdrola portoflo-solar  + onshore wind </td>
+        <td>€0M</td>
+        <td>EUR</td>
+        <td>0.49%</td>
+        <td>1265 MW</td>
+        <td>620 MW</td>
+        <td>2023</td>
+        <td>Jan</td>
+        <td>Onshore Wind + Solar</td>
+        <td>Spain & Portugal</td>
+        <td>Iberdrola</td>
+        <td>Development</td>
+        <td>Operational </td>
+      </tr>
+    
+      <tr>
+        <td>He Dreiht</td>
+        <td>€0M</td>
+        <td>EUR</td>
+        <td>0.166%</td>
+        <td>960 MW</td>
+        <td>159 MW</td>
+        <td>2023</td>
+        <td>March</td>
+        <td>Offshore Wind</td>
+        <td>Germany</td>
+        <td>EnBW</td>
+        <td>Under Construction</td>
+        <td>Under Construction</td>
+      </tr>
+    
+      <tr>
+        <td>Race Bank</td>
+        <td>€0M</td>
+        <td>GBP</td>
+        <td>0.375%</td>
+        <td>573 MW</td>
+        <td>215 MW</td>
+        <td>2024</td>
+        <td>June</td>
+        <td>Offshore Wind</td>
+        <td>United Kingdom</td>
+        <td>Ørsted</td>
+        <td>Operational </td>
+        <td>Operational </td>
+      </tr>
+    
+      <tr>
+        <td>Iberdrola portfolio (Spain & Portugal) – solar + onshore wind </td>
+        <td>€0M</td>
+        <td>EUR</td>
+        <td>0.49%</td>
+        <td>674 MW</td>
+        <td>330 MW</td>
+        <td>2024</td>
+        <td>Jan</td>
+        <td>Onshore Wind + Solar</td>
+        <td>Spain & Portugal</td>
+        <td>Iberdrola</td>
+        <td>Development</td>
+        <td>Development</td>
+      </tr>
+    
+      <tr>
+        <td>Iberdrola Solar </td>
+        <td>€0M</td>
+        <td>EUR</td>
+        <td>0.49%</td>
+        <td>644 MW</td>
+        <td>316 MW</td>
+        <td>2024</td>
+        <td>April</td>
+        <td>Solar</td>
+        <td>Spain & Portugal</td>
+        <td>Iberdrola</td>
+        <td>Operational + Development</td>
+        <td>Operational </td>
+      </tr>
+    
+      <tr>
+        <td>Copenhagen Infrastructure Partners</td>
+        <td>€0M</td>
+        <td>EUR</td>
+        <td>N/A%</td>
+        <td>N/A MW</td>
+        <td>N/A</td>
+        <td>2024</td>
+        <td>Aug</td>
+        <td>Diversified</td>
+        <td>Unknown</td>
+        <td>Unknown</td>
+        <td>Unknown</td>
+        <td>Unknown</td>
+      </tr>
+    
+      <tr>
+        <td>Thor</td>
+        <td>€0M</td>
+        <td>EUR</td>
+        <td>0.49%</td>
+        <td>1040 MW</td>
+        <td>510 MW</td>
+        <td>2025</td>
+        <td>March</td>
+        <td>Offshore Wind</td>
+        <td>Denmark</td>
+        <td>RWE</td>
+        <td>Under Construction</td>
+        <td>Under Construction</td>
+      </tr>
+    
+      <tr>
+        <td>Nordseecluster</td>
+        <td>€0M</td>
+        <td>EUR</td>
+        <td>0.49%</td>
+        <td>1600 MW</td>
+        <td>784 MW</td>
+        <td>2025</td>
+        <td>March</td>
+        <td>Offshore Wind</td>
+        <td>Germany</td>
+        <td>RWE</td>
+        <td>Under Construction</td>
+        <td>Under Construction</td>
+      </tr>
+    
+        </tbody>
+      </table>
+    
+        </div>
+
+        <div class="footer">
+            <p>🤖 Generated from Excel data • Powered by NBIM Dashboard System</p>
+        </div>
+    </div>
+
+    <script>
+        // Chart configurations and data
+        const yearlyData = {"labels":["2021","2023","2024","2025"],"datasets":[{"label":"Investment (€M)","data":[0,0,0,0],"backgroundColor":"#667eea","borderColor":"#667eea","borderWidth":1}]};
+        const technologyData = {"labels":["Offshore Wind","Onshore Wind + Solar","Solar","Diversified"],"datasets":[{"data":[0,0,0,0],"backgroundColor":["#667eea","#764ba2","#f093fb","#f5576c"],"borderWidth":2,"borderColor":"#fff"}]};
+        const geographyData = {"labels":["Netherlands","Spain & Portugal","Germany","United Kingdom","Unknown","Denmark"],"datasets":[{"label":"Investment (€M)","data":[0,0,0,0,0,0],"backgroundColor":"#764ba2","borderColor":"#764ba2","borderWidth":1}]};
+        const cashflowData = {"labels":["2021","2022","2023","2024"],"datasets":[{"label":"New Investments","data":[-14023,0,-2939,-7541],"borderColor":"#f5576c","backgroundColor":"rgba(245, 87, 108, 0.1)","fill":false},{"label":"Operational Cash Flow","data":[0,0,0,0],"borderColor":"#667eea","backgroundColor":"rgba(102, 126, 234, 0.1)","fill":false},{"label":"Receipts Interest","data":[80,162,397,407],"borderColor":"#4facfe","backgroundColor":"rgba(79, 172, 254, 0.1)","fill":false}]};
+
+        // Yearly Investment Chart
+        new Chart(document.getElementById('yearlyChart'), {
+            type: 'bar',
+            data: yearlyData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: { display: true, text: 'Investment by Acquisition Year' },
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { beginAtZero: true, title: { display: true, text: 'Investment (€M)' } }
+                }
+            }
+        });
+
+        // Technology Breakdown Chart
+        new Chart(document.getElementById('technologyChart'), {
+            type: 'doughnut',
+            data: technologyData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: { display: true, text: 'Investment by Technology' }
+                }
+            }
+        });
+
+        // Geography Distribution Chart
+        new Chart(document.getElementById('geographyChart'), {
+            type: 'bar',
+            data: geographyData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: { display: true, text: 'Investment by Geography' },
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { beginAtZero: true, title: { display: true, text: 'Investment (€M)' } }
+                }
+            }
+        });
+
+        // Cashflow Chart
+        new Chart(document.getElementById('cashflowChart'), {
+            type: 'line',
+            data: cashflowData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: { display: true, text: 'Cash Flow Analysis (NOK Millions)' }
+                },
+                scales: {
+                    y: { title: { display: true, text: 'Amount (NOK Millions)' } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
