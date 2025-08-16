@@ -1,0 +1,128 @@
+{
+  "lastUpdated": "2025-08-16T14:25:44.082Z",
+  "metadata": {
+    "source": "NBIM Unlisted Infrastructure Reports - Excel Import",
+    "currency": "NOK millions",
+    "description": "Cash flow data for unlisted renewable infrastructure investments",
+    "excelFile": "NBIM_Cashflow.xlsx"
+  },
+  "cashflows": [
+    {
+      "year": 2021,
+      "period": "1H",
+      "receipts_interest": 0,
+      "receipts_dividends": 0,
+      "receipts_interest_div_total": 0,
+      "payments_new_investments": -14023,
+      "payments_development_assets": 0,
+      "receipts_from_ongoing_ops": 0,
+      "net_cf_to_from_investments": 0,
+      "net_cf_unlisted_infra": 0,
+      "cash_flow_from_ongoing_ops": 0
+    },
+    {
+      "year": 2021,
+      "period": "Full year",
+      "receipts_interest": 80,
+      "receipts_dividends": 0,
+      "receipts_interest_div_total": 0,
+      "payments_new_investments": -14023,
+      "payments_development_assets": 0,
+      "receipts_from_ongoing_ops": 0,
+      "net_cf_to_from_investments": 0,
+      "net_cf_unlisted_infra": 0,
+      "cash_flow_from_ongoing_ops": 0
+    },
+    {
+      "year": 2022,
+      "period": "1H",
+      "receipts_interest": 96,
+      "receipts_dividends": 0,
+      "receipts_interest_div_total": 0,
+      "payments_new_investments": 0,
+      "payments_development_assets": 0,
+      "receipts_from_ongoing_ops": 0,
+      "net_cf_to_from_investments": 0,
+      "net_cf_unlisted_infra": 0,
+      "cash_flow_from_ongoing_ops": 0
+    },
+    {
+      "year": 2022,
+      "period": "Full year",
+      "receipts_interest": 162,
+      "receipts_dividends": 0,
+      "receipts_interest_div_total": 0,
+      "payments_new_investments": 0,
+      "payments_development_assets": 0,
+      "receipts_from_ongoing_ops": 0,
+      "net_cf_to_from_investments": 0,
+      "net_cf_unlisted_infra": 0,
+      "cash_flow_from_ongoing_ops": 0
+    },
+    {
+      "year": 2023,
+      "period": "1H",
+      "receipts_interest": 143,
+      "receipts_dividends": 314,
+      "receipts_interest_div_total": 0,
+      "payments_new_investments": -2643,
+      "payments_development_assets": 0,
+      "receipts_from_ongoing_ops": 0,
+      "net_cf_to_from_investments": 0,
+      "net_cf_unlisted_infra": 0,
+      "cash_flow_from_ongoing_ops": 0
+    },
+    {
+      "year": 2023,
+      "period": "Full year",
+      "receipts_interest": 397,
+      "receipts_dividends": 355,
+      "receipts_interest_div_total": 0,
+      "payments_new_investments": -2939,
+      "payments_development_assets": -1071,
+      "receipts_from_ongoing_ops": 0,
+      "net_cf_to_from_investments": 0,
+      "net_cf_unlisted_infra": 0,
+      "cash_flow_from_ongoing_ops": 0
+    },
+    {
+      "year": 2024,
+      "period": "1H",
+      "receipts_interest": 199,
+      "receipts_dividends": 33,
+      "receipts_interest_div_total": 0,
+      "payments_new_investments": -4941,
+      "payments_development_assets": -436,
+      "receipts_from_ongoing_ops": 0,
+      "net_cf_to_from_investments": 0,
+      "net_cf_unlisted_infra": 0,
+      "cash_flow_from_ongoing_ops": 0
+    },
+    {
+      "year": 2024,
+      "period": "Full year",
+      "receipts_interest": 407,
+      "receipts_dividends": 33,
+      "receipts_interest_div_total": 0,
+      "payments_new_investments": -7541,
+      "payments_development_assets": -681,
+      "receipts_from_ongoing_ops": 0,
+      "net_cf_to_from_investments": 0,
+      "net_cf_unlisted_infra": 0,
+      "cash_flow_from_ongoing_ops": 0
+    },
+    {
+      "year": 2025,
+      "period": "1H",
+      "receipts_interest": 247,
+      "receipts_dividends": 192,
+      "receipts_interest_div_total": 0,
+      "payments_new_investments": -20387,
+      "payments_development_assets": -260,
+      "receipts_from_ongoing_ops": 0,
+      "net_cf_to_from_investments": 0,
+      "net_cf_unlisted_infra": 0,
+      "cash_flow_from_ongoing_ops": 0
+    }
+  ]
+}
