@@ -63,12 +63,17 @@ jobs:
           echo "No changes to commit"
         fi
         
-    - name: 🚀 Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
+    - name: 📁 Setup Pages
+      uses: actions/configure-pages@v4
+      
+    - name: 📦 Upload Pages artifact
+      uses: actions/upload-pages-artifact@v3
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./public
-        commit_message: '🚀 Deploy NBIM Dashboard - ${{ github.sha }}'
+        path: ./public
+        
+    - name: 🚀 Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
         
     - name: 📊 Deployment Summary
       run: |
