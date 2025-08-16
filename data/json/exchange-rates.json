@@ -1,0 +1,29 @@
+{
+  "lastUpdated": "2025-08-16T14:25:44.087Z",
+  "metadata": {
+    "source": "NBIM Financial Statements - Excel Import",
+    "baseCurrency": "NOK",
+    "description": "Exchange rate assumptions used for portfolio calculations",
+    "excelFile": "NBIM_ExchangeRates.xlsx"
+  },
+  "rates": {
+    "NOK_EUR": {
+      "2021": 10.03,
+      "2022": 10.51,
+      "2023": 11.22,
+      "2024": 11.76,
+      "2025": 11.76
+    },
+    "GBP_NOK": {
+      "2021": 11.94,
+      "2022": 11.85,
+      "2023": 12.95,
+      "2024": 14.22,
+      "2025": 13.56
+    }
+  },
+  "notes": {
+    "NOK_EUR": "Euro per Norwegian Kroner (EUR/NOK rate)",
+    "GBP_NOK": "British Pounds to Norwegian Kroner"
+  }
+}
