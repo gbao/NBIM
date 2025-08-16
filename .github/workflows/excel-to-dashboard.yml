@@ -1,0 +1,80 @@
+name: Excel to NBIM Dashboard
+
+on:
+  push:
+    branches: [ main ]
+    paths: 
+      - 'data/excel/**'
+      - 'scripts/**'
+      - 'templates/**'
+  schedule:
+    - cron: '0 9 * * 1'  # Weekly Monday 9 AM
+  workflow_dispatch:
+
+jobs:
+  excel-to-dashboard:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📂 Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: 🔧 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: 📦 Install dependencies
+      run: |
+        npm install
+        
+    - name: 📊 Convert Excel to JSON
+      run: |
+        echo "📊 Converting Excel files to JSON..."
+        node scripts/excel-to-json.js
+        
+    - name: 🔍 Validate converted data
+      run: |
+        echo "🔍 Validating converted data..."
+        node scripts/validate-data.js
+      
+    - name: 🎨 Generate dashboard
+      run: |
+        echo "🎨 Generating dashboard..."
+        node scripts/generate-dashboard.js
+        
+    - name: 💾 Commit updated JSON files
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "NBIM Dashboard Bot"
+        git add data/json/ || true
+        git add public/ || true
+        if ! git diff --staged --quiet; then
+          git commit -m "🤖 Auto-update: Excel → Dashboard $(date '+%Y-%m-%d %H:%M')"
+          git push
+        else
+          echo "No changes to commit"
+        fi
+        
+    - name: 🚀 Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./public
+        commit_message: '🚀 Deploy NBIM Dashboard - ${{ github.sha }}'
+        
+    - name: 📊 Deployment Summary
+      run: |
+        echo "## 🎉 NBIM Dashboard Updated Successfully!" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "- **⏰ Updated**: $(date)" >> $GITHUB_STEP_SUMMARY
+        echo "- **🔗 Live URL**: https://gbao.github.io/NBIM" >> $GITHUB_STEP_SUMMARY
+        echo "- **📊 Data Source**: Excel files in /data/excel/" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### ✅ Files Processed:" >> $GITHUB_STEP_SUMMARY
+        echo "- 📈 NBIM_Acquisitions.xlsx" >> $GITHUB_STEP_SUMMARY
+        echo "- 💰 NBIM_Cashflow.xlsx" >> $GITHUB_STEP_SUMMARY
+        echo "- 💱 NBIM_ExchangeRates.xlsx" >> $GITHUB_STEP_SUMMARY

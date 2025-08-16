@@ -1,0 +1,32 @@
+{
+  "name": "nbim-excel-dashboard",
+  "version": "1.0.0",
+  "description": "NBIM Excel-to-Dashboard Automation System",
+  "main": "scripts/generate-dashboard.js",
+  "scripts": {
+    "convert": "node scripts/excel-to-json.js",
+    "validate": "node scripts/validate-data.js",
+    "build": "node scripts/generate-dashboard.js",
+    "dev": "npm run convert && npm run validate && npm run build",
+    "serve": "npx http-server public -p 8080 -o",
+    "full-update": "npm run convert && npm run validate && npm run build && echo '✅ Dashboard updated from Excel files!'"
+  },
+  "dependencies": {
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "keywords": [
+    "nbim",
+    "excel",
+    "dashboard",
+    "offshore-wind",
+    "automation"
+  ],
+  "author": "NBIM",
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
