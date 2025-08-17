@@ -117,15 +117,19 @@
 
         .metrics-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
             margin-bottom: 3rem;
+        }
+
+        .metrics-row {
+            display: contents;
         }
 
         .metric-card {
             background: white;
-            border-radius: 8px;
-            padding: 2rem;
+            border-radius: 6px;
+            padding: 1.5rem;
             border: 1px solid #e2e8f0;
             transition: box-shadow 0.2s ease;
         }
@@ -135,23 +139,29 @@
         }
 
         .metric-label {
-            font-size: 0.875rem;
+            font-size: 0.75rem;
             color: #64748b;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.25rem;
             font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .metric-value {
-            font-size: 2.5rem;
-            font-weight: 300;
+            font-size: 1.8rem;
+            font-weight: 600;
             color: #1e293b;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.25rem;
         }
 
         .metric-secondary {
-            font-size: 0.875rem;
+            font-size: 0.75rem;
             color: #64748b;
-            margin-bottom: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .offshore-row {
+            border-left: 3px solid #1e40af;
         }
 
         .metric-change {
@@ -374,7 +384,7 @@
                 <div class="live-indicator">Live</div>
                 <div class="last-updated">
                     Last Updated<br>
-                    <strong>17 Aug 2025, 11:31 UTC</strong>
+                    <strong>17 Aug 2025, 12:42 UTC</strong>
                 </div>
             </div>
         </div>
@@ -388,6 +398,7 @@
 
         <!-- Key Metrics Grid -->
         <div class="metrics-grid">
+            <!-- First Row: Portfolio Overview -->
             <div class="metric-card">
                 <div class="metric-label">Total Investment</div>
                 <div class="metric-value">€5.6B</div>
@@ -396,20 +407,33 @@
 
             <div class="metric-card">
                 <div class="metric-label">Total Capacity</div>
+                <div class="metric-value">7508 MW</div>
+                <div class="metric-secondary">Sum of all projects</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-label">NBIM Stake</div>
                 <div class="metric-value">3310 MW</div>
+                <div class="metric-secondary">NBIM ownership share</div>
+            </div>
+
+            <!-- Second Row: Offshore Wind Focus -->
+            <div class="metric-card offshore-row">
+                <div class="metric-label">Offshore Wind Investment</div>
+                <div class="metric-value">€3.6B</div>
+                <div class="metric-secondary">Total offshore portfolio</div>
+            </div>
+
+            <div class="metric-card offshore-row">
+                <div class="metric-label">Offshore Capacity</div>
+                <div class="metric-value">2.0 GW</div>
                 <div class="metric-secondary">NBIM ownership stake</div>
             </div>
 
-            <div class="metric-card">
-                <div class="metric-label">Offshore Wind</div>
-                <div class="metric-value">€3.6B</div>
-                <div class="metric-secondary">2044 MW capacity</div>
-            </div>
-
-            <div class="metric-card">
-                <div class="metric-label">Operational</div>
-                <div class="metric-value">46%</div>
-                <div class="metric-secondary">Assets generating returns</div>
+            <div class="metric-card offshore-row">
+                <div class="metric-label">Operational Offshore</div>
+                <div class="metric-value">0.6 GW</div>
+                <div class="metric-secondary">Currently generating</div>
             </div>
         </div>
 
@@ -662,7 +686,7 @@
         const technologyData = {"labels":["Offshore Wind","Onshore Wind + Solar","Solar","Diversified"],"datasets":[{"data":[3604,907,203,900],"backgroundColor":["#667eea","#764ba2","#f093fb","#f5576c"],"borderWidth":2,"borderColor":"#fff"}]};
         const geographyData = {"labels":["Netherlands","Germany","Spain & Portugal","Unknown","Denmark","United Kingdom"],"datasets":[{"label":"Investment (€M)","data":[1375,1257,1110,900,573,399],"backgroundColor":"#764ba2","borderColor":"#764ba2","borderWidth":1}]};
         const cashflowData = {"labels":["2021","2022","2023","2024"],"datasets":[{"label":"New Investments","data":[-14023,0,-2939,-7541],"borderColor":"#f5576c","backgroundColor":"rgba(245, 87, 108, 0.1)","fill":false},{"label":"Operational Cash Flow","data":[0,0,0,0],"borderColor":"#667eea","backgroundColor":"rgba(102, 126, 234, 0.1)","fill":false},{"label":"Receipts Interest","data":[80,162,397,407],"borderColor":"#4facfe","backgroundColor":"rgba(79, 172, 254, 0.1)","fill":false}]};
-        const exchangeRatesData = {"lastUpdated":"2025-08-17T11:31:36.871Z","metadata":{"source":"NBIM Financial Statements - Excel Import","baseCurrency":"NOK","description":"Exchange rate assumptions used for portfolio calculations","excelFile":"NBIM_ExchangeRates.xlsx"},"rates":{"NOK_EUR":{"2021":10.03,"2022":10.51,"2023":11.22,"2024":11.76,"2025":11.76},"GBP_NOK":{"2021":11.94,"2022":11.85,"2023":12.95,"2024":14.22,"2025":13.56}},"notes":{"NOK_EUR":"Euro per Norwegian Kroner (EUR/NOK rate)","GBP_NOK":"British Pounds to Norwegian Kroner"}};
+        const exchangeRatesData = {"lastUpdated":"2025-08-17T12:42:13.325Z","metadata":{"source":"NBIM Financial Statements - Excel Import","baseCurrency":"NOK","description":"Exchange rate assumptions used for portfolio calculations","excelFile":"NBIM_ExchangeRates.xlsx"},"rates":{"NOK_EUR":{"2021":10.03,"2022":10.51,"2023":11.22,"2024":11.76,"2025":11.76},"GBP_NOK":{"2021":11.94,"2022":11.85,"2023":12.95,"2024":14.22,"2025":13.56}},"notes":{"NOK_EUR":"Euro per Norwegian Kroner (EUR/NOK rate)","GBP_NOK":"British Pounds to Norwegian Kroner"}};
 
         // Generate technology allocation bars
         function generateTechnologyAllocation() {
