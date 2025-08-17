@@ -66,7 +66,7 @@ class DashboardGenerator {
       // Replace template variables
       return template
         .replace(/{{LAST_UPDATED}}/g, lastUpdated)
-        .replace(/{{TOTAL_INVESTMENT}}/g, this.formatCurrency(data.metrics.totalInvestmentEur))
+        .replace(/{{TOTAL_INVESTMENT}}/g, this.formatCurrencyWithoutUnit(data.metrics.totalInvestmentEur))
         .replace(/{{TOTAL_PROJECTS}}/g, data.metrics.totalProjects.toString())
         .replace(/{{TOTAL_CAPACITY_ALL}}/g, Math.round(data.metrics.totalCapacityAll).toString())
         .replace(/{{TOTAL_CAPACITY}}/g, Math.round(data.metrics.totalCapacityByStake).toString())
@@ -388,6 +388,13 @@ class DashboardGenerator {
 
   formatCurrency(amount) {
     return this.formatNumber(amount);
+  }
+
+  formatCurrencyWithoutUnit(amount) {
+    if (amount >= 1000) {
+      return (amount / 1000).toFixed(1);
+    }
+    return Math.round(amount).toString();
   }
 
   formatNumber(num) {
