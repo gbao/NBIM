@@ -117,15 +117,19 @@
 
         .metrics-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
             margin-bottom: 3rem;
+        }
+
+        .metrics-row {
+            display: contents;
         }
 
         .metric-card {
             background: white;
-            border-radius: 8px;
-            padding: 2rem;
+            border-radius: 6px;
+            padding: 1.5rem;
             border: 1px solid #e2e8f0;
             transition: box-shadow 0.2s ease;
         }
@@ -135,23 +139,29 @@
         }
 
         .metric-label {
-            font-size: 0.875rem;
+            font-size: 0.75rem;
             color: #64748b;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.25rem;
             font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .metric-value {
-            font-size: 2.5rem;
-            font-weight: 300;
+            font-size: 1.8rem;
+            font-weight: 600;
             color: #1e293b;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.25rem;
         }
 
         .metric-secondary {
-            font-size: 0.875rem;
+            font-size: 0.75rem;
             color: #64748b;
-            margin-bottom: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .offshore-row {
+            border-left: 3px solid #1e40af;
         }
 
         .metric-change {
@@ -388,6 +398,7 @@
 
         <!-- Key Metrics Grid -->
         <div class="metrics-grid">
+            <!-- First Row: Portfolio Overview -->
             <div class="metric-card">
                 <div class="metric-label">Total Investment</div>
                 <div class="metric-value">€{{TOTAL_INVESTMENT}}</div>
@@ -396,20 +407,33 @@
 
             <div class="metric-card">
                 <div class="metric-label">Total Capacity</div>
+                <div class="metric-value">{{TOTAL_CAPACITY_ALL}} MW</div>
+                <div class="metric-secondary">Sum of all projects</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-label">NBIM Stake</div>
                 <div class="metric-value">{{TOTAL_CAPACITY}} MW</div>
+                <div class="metric-secondary">NBIM ownership share</div>
+            </div>
+
+            <!-- Second Row: Offshore Wind Focus -->
+            <div class="metric-card offshore-row">
+                <div class="metric-label">Offshore Wind Investment</div>
+                <div class="metric-value">€{{OFFSHORE_INVESTMENT}}</div>
+                <div class="metric-secondary">Total offshore portfolio</div>
+            </div>
+
+            <div class="metric-card offshore-row">
+                <div class="metric-label">Offshore Capacity</div>
+                <div class="metric-value">{{OFFSHORE_CAPACITY_GW}} GW</div>
                 <div class="metric-secondary">NBIM ownership stake</div>
             </div>
 
-            <div class="metric-card">
-                <div class="metric-label">Offshore Wind</div>
-                <div class="metric-value">€{{OFFSHORE_INVESTMENT}}</div>
-                <div class="metric-secondary">{{OFFSHORE_CAPACITY}} MW capacity</div>
-            </div>
-
-            <div class="metric-card">
-                <div class="metric-label">Operational</div>
-                <div class="metric-value">{{OPERATIONAL_PERCENTAGE}}%</div>
-                <div class="metric-secondary">Assets generating returns</div>
+            <div class="metric-card offshore-row">
+                <div class="metric-label">Operational Offshore</div>
+                <div class="metric-value">{{OFFSHORE_OPERATIONAL_GW}} GW</div>
+                <div class="metric-secondary">Currently generating</div>
             </div>
         </div>
 

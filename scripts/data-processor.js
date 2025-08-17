@@ -74,8 +74,10 @@ class DataProcessor {
   calculateMetrics(acquisitions, exchangeRates) {
     let totalInvestmentEur = 0;
     let totalCapacityByStake = 0;
+    let totalCapacityAll = 0;
     let offshoreInvestmentEur = 0;
     let offshoreCapacityByStake = 0;
+    let offshoreOperationalCapacity = 0;
     const yearlyInvestments = {};
     const technologyBreakdown = {};
     const geographyBreakdown = {};
@@ -90,6 +92,11 @@ class DataProcessor {
       );
 
       totalInvestmentEur += costInEur;
+
+      // Track total capacity (sum of all projects)
+      if (investment.totalCapacity) {
+        totalCapacityAll += investment.totalCapacity;
+      }
 
       // Track yearly investments
       if (!yearlyInvestments[investment.acquisitionYear]) {
@@ -145,6 +152,12 @@ class DataProcessor {
       // Offshore wind specific calculations
       if (tech.toLowerCase().includes('offshore wind')) {
         offshoreInvestmentEur += costInEur;
+        
+        // Check if offshore wind is operational
+        const status = investment.currentStatus?.toLowerCase() || 'unknown';
+        if (status.includes('operational') && capacityByStake > 0) {
+          offshoreOperationalCapacity += capacityByStake;
+        }
       }
     });
 
@@ -161,8 +174,10 @@ class DataProcessor {
     return {
       totalInvestmentEur,
       totalCapacityByStake,
+      totalCapacityAll,
       offshoreInvestmentEur,
       offshoreCapacityByStake,
+      offshoreOperationalCapacity,
       avgInvestmentPerYear,
       yearlyInvestments,
       technologyBreakdown,
