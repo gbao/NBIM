@@ -336,29 +336,107 @@
         .data-table {
             width: 100%;
             border-collapse: collapse;
+            font-size: 0.85rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
 
         .data-table th {
-            background: #f8fafc;
-            padding: 1rem;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            padding: 0.875rem 0.75rem;
             text-align: left;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 600;
-            color: #64748b;
+            color: #475569;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            border-bottom: 1px solid #e2e8f0;
+            letter-spacing: 0.075em;
+            border-bottom: 2px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .data-table th:first-child {
+            min-width: 180px;
+        }
+
+        .data-table th:nth-child(2) {
+            min-width: 120px;
         }
 
         .data-table td {
-            padding: 1rem;
+            padding: 0.875rem 0.75rem;
             border-bottom: 1px solid #f1f5f9;
-            font-size: 0.875rem;
+            font-size: 0.8rem;
             color: #1e293b;
+            vertical-align: middle;
         }
 
         .data-table td:not(:first-child) {
             text-align: right;
+        }
+
+        .data-table td:first-child {
+            font-weight: 500;
+            color: #1e40af;
+            text-align: left;
+        }
+
+        .data-table tbody tr:nth-child(even) {
+            background: #fafbfc;
+        }
+
+        .data-table tbody tr:hover {
+            background: #f1f5f9;
+            transform: scale(1.001);
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .data-table .status-operational {
+            color: #059669;
+            font-weight: 500;
+            padding: 0.25rem 0.5rem;
+            background: #dcfce7;
+            border-radius: 4px;
+            font-size: 0.7rem;
+        }
+
+        .data-table .status-development {
+            color: #d97706;
+            font-weight: 500;
+            padding: 0.25rem 0.5rem;
+            background: #fef3c7;
+            border-radius: 4px;
+            font-size: 0.7rem;
+        }
+
+        .data-table .status-construction {
+            color: #7c3aed;
+            font-weight: 500;
+            padding: 0.25rem 0.5rem;
+            background: #e9d5ff;
+            border-radius: 4px;
+            font-size: 0.7rem;
+        }
+
+        .data-table .tech-offshore {
+            color: #0ea5e9;
+            font-weight: 500;
+        }
+
+        .data-table .tech-onshore {
+            color: #22c55e;
+            font-weight: 500;
+        }
+
+        .data-table .investment-amount {
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .data-table .capacity-value {
+            font-weight: 500;
+            color: #64748b;
         }
 
         .text-positive {
@@ -450,7 +528,7 @@
         <!-- Portfolio Overview Metrics -->
         <div class="metrics-section">
             <div class="metrics-header">
-                <div class="metrics-title">Portfolio Overview</div>
+                <div class="metrics-title">Portfolio Overview*</div>
                 <div class="metrics-period">2025 H1</div>
             </div>
             <div class="metrics-grid">
@@ -464,22 +542,29 @@
                 </div>
 
                 <div class="metric-item">
-                    <div class="metric-label">Total Capacity</div>
-                    <div class="metric-value">{{TOTAL_CAPACITY_ALL}}</div>
+                    <div class="metric-label">Capacity</div>
+                    <div class="metric-value">{{TOTAL_CAPACITY}}</div>
                     <div class="metric-unit">MW</div>
-                    <div class="metric-change neutral">
-                        Sum of all projects
+                    <div class="metric-change positive">
+                        By Ownership
                     </div>
                 </div>
 
                 <div class="metric-item">
-                    <div class="metric-label">NBIM Stake</div>
-                    <div class="metric-value">{{TOTAL_CAPACITY}}</div>
-                    <div class="metric-unit">MW</div>
+                    <div class="metric-label">AVG. DEPLOYMENT**</div>
+                    <div class="metric-value">{{AVG_DEPLOYMENT}}</div>
+                    <div class="metric-unit">Billion p.a.</div>
                     <div class="metric-change neutral">
-                        Ownership share
+                        2021 -2025
                     </div>
                 </div>
+            </div>
+            <div style="padding: 0.75rem 1.5rem; font-size: 0.7rem; color: #718096; border-top: 1px solid #f1f5f9;">
+                * excluding CAPEX contribution
+                 
+            </div>
+            <div style="padding: 0.75rem 1.5rem; font-size: 0.7rem; color: #718096; border-top: 1px solid #f1f5f9;">
+                ** excluding 2022
             </div>
         </div>
 
@@ -491,89 +576,62 @@
             </div>
             <div class="metrics-grid offshore-grid">
                 <div class="metric-item">
-                    <div class="metric-label">Offshore Investment</div>
+                    <div class="metric-label">Offshore Wind Investment</div>
                     <div class="metric-value">€{{OFFSHORE_INVESTMENT}}</div>
                     <div class="metric-unit">Billion</div>
                     <div class="metric-change positive">
-                        Core portfolio
+                        {{OFFSHORE_PERCENTAGE}}% of Total AUM 
                     </div>
                 </div>
 
                 <div class="metric-item">
-                    <div class="metric-label">Offshore Capacity</div>
+                    <div class="metric-label">Offshore Wind Capacity</div>
                     <div class="metric-value">{{OFFSHORE_CAPACITY_GW}}</div>
-                    <div class="metric-unit">GW</div>
-                    <div class="metric-change neutral">
-                        NBIM stake
+                    <div class="metric-unit">MW</div>
+                    <div class="metric-change positive">
+                        by Ownership
                     </div>
                 </div>
 
                 <div class="metric-item">
-                    <div class="metric-label">Operational</div>
+                    <div class="metric-label">Operational Assets</div>
                     <div class="metric-value">{{OFFSHORE_OPERATIONAL_GW}}</div>
-                    <div class="metric-unit">GW</div>
+                    <div class="metric-unit">MW</div>
                     <div class="metric-change positive">
-                        ↗ Generating
+                        ↗ Generating. {{OFFSHORE_OPERATIONAL_PERCENTAGE}}% of Total Offshore Wind Capacity
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Technology Allocation -->
-        <div class="allocation-section">
-            <div class="allocation-header">
-                <div class="allocation-title">Technology Allocation</div>
-            </div>
-            <div id="technologyAllocation">
-                <!-- Dynamic content -->
+        <!-- Geographic Distribution -->
+        <div class="chart-section">
+            <div class="chart-header">
+                <div class="chart-title">Geographic Distribution (Under Construction)</div>
             </div>
         </div>
 
-        <!-- Geographic Allocation -->
-        <div class="allocation-section">
-            <div class="allocation-header">
-                <div class="allocation-title">Geographic Distribution</div>
-            </div>
-            <div id="geographicAllocation">
-                <!-- Dynamic content -->
-            </div>
-        </div>
 
         <!-- Charts Section -->
         <div class="chart-section">
             <div class="chart-header">
-                <div class="chart-title">Investment by Year</div>
+                <div class="chart-title">Investment by Year (Under Construction)</div>
             </div>
-            <div class="chart-container">
-                <canvas id="yearlyChart"></canvas>
-            </div>
+
         </div>
 
         <div class="chart-section">
             <div class="chart-header">
-                <div class="chart-title">Cash Flow Analysis</div>
-            </div>
-            <div class="chart-container">
-                <canvas id="cashFlowChart"></canvas>
+                <div class="chart-title">Cash Flow Analysis  (Under Construction)</div>
             </div>
         </div>
 
-        <!-- Exchange Rates -->
-        <div class="exchange-rates-section">
-            <div class="allocation-header">
-                <div class="allocation-title">Exchange Rate Assumptions</div>
-                <div class="metric-secondary">EUR/NOK rates used for calculations</div>
-            </div>
-            <div class="rates-grid" id="exchangeRates">
-                <!-- Dynamic content -->
-            </div>
-        </div>
 
         <!-- Investment Details Table -->
         <div class="data-table-section">
             <div class="table-header">
-                <div class="table-title">Investment Details</div>
-                <div class="metric-secondary">All investment amounts converted to EUR</div>
+                <div class="table-title">Investment Holdings</div>
+                <div class="metric-secondary">Detailed portfolio breakdown converted to EUR</div>
             </div>
             {{INVESTMENTS_TABLE}}
         </div>
@@ -625,27 +683,28 @@
             });
         }
 
-        // Generate geographic allocation bars
-        function generateGeographicAllocation() {
-            const container = document.getElementById('geographicAllocation');
-            const geographies = geographyData.labels;
-            const values = geographyData.datasets[0].data;
-            const total = values.reduce((sum, val) => sum + val, 0);
-
-            geographies.forEach((geo, index) => {
-                const percentage = ((values[index] / total) * 100).toFixed(1);
-                const item = document.createElement('div');
-                item.className = 'allocation-item';
-                item.innerHTML = `
-                    <div class="allocation-label">${geo}</div>
-                    <div class="allocation-bar-container">
-                        <div class="allocation-bar" style="width: ${percentage}%"></div>
-                    </div>
-                    <div class="allocation-percentage">${percentage}%</div>
-                `;
-                container.appendChild(item);
-            });
-        }
+        // Geographic Distribution Pie Chart
+        const ctx3 = document.getElementById('geographyChart').getContext('2d');
+        new Chart(ctx3, {
+            type: 'doughnut',
+            data: geographyData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                        labels: {
+                            boxWidth: 12,
+                            usePointStyle: true,
+                            pointStyle: 'circle',
+                            padding: 20
+                        }
+                    }
+                },
+                cutout: '50%'
+            }
+        });
 
         // Generate exchange rates display
         function generateExchangeRates() {
@@ -737,7 +796,6 @@
 
         // Initialize allocations and rates
         generateTechnologyAllocation();
-        generateGeographicAllocation();
         generateExchangeRates();
     </script>
 </body>

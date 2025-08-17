@@ -163,12 +163,16 @@ class DataProcessor {
 
     const avgInvestmentPerYear = totalInvestmentEur / Object.keys(yearlyInvestments).length;
     const operationalPercentage = (statusBreakdown.operational / totalInvestmentEur) * 100;
+    const offshorePercentageOfTotal = totalInvestmentEur > 0 ? (offshoreInvestmentEur / totalInvestmentEur) * 100 : 0;
+    const offshoreOperationalPercentage = offshoreCapacityByStake > 0 ? (offshoreOperationalCapacity / offshoreCapacityByStake) * 100 : 0;
 
     console.log(`\n📊 FINAL CALCULATION SUMMARY:`);
     console.log(`💰 Total Investment (EUR): €${totalInvestmentEur.toFixed(2)}M`);
     console.log(`🏗️ Total Projects: ${acquisitions.investments.length}`);
     console.log(`⚡ Total Capacity: ${totalCapacityByStake.toFixed(2)} MW`);
     console.log(`🌊 Offshore Investment: €${offshoreInvestmentEur.toFixed(2)}M`);
+    console.log(`🌊 Offshore % of Total: ${offshorePercentageOfTotal.toFixed(1)}%`);
+    console.log(`⚡ Offshore Operational: ${offshoreOperationalCapacity.toFixed(2)} MW (${offshoreOperationalPercentage.toFixed(1)}% of offshore capacity)`);
     console.log(`🎯 Operational %: ${operationalPercentage.toFixed(1)}%`);
 
     return {
@@ -178,6 +182,8 @@ class DataProcessor {
       offshoreInvestmentEur,
       offshoreCapacityByStake,
       offshoreOperationalCapacity,
+      offshorePercentageOfTotal,
+      offshoreOperationalPercentage,
       avgInvestmentPerYear,
       yearlyInvestments,
       technologyBreakdown,

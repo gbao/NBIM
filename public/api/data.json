@@ -6,6 +6,8 @@
     "offshoreInvestmentEur": 3604.030612244898,
     "offshoreCapacityByStake": 2043.835,
     "offshoreOperationalCapacity": 590.875,
+    "offshorePercentageOfTotal": 64.19684645794518,
+    "offshoreOperationalPercentage": 28.91011260693745,
     "avgInvestmentPerYear": 1403.5076530612246,
     "yearlyInvestments": {
       "2021": 1375,
@@ -353,7 +355,7 @@
     }
   ],
   "exchangeRates": {
-    "lastUpdated": "2025-08-17T13:36:30.543Z",
+    "lastUpdated": "2025-08-17T13:51:35.431Z",
     "metadata": {
       "source": "NBIM Financial Statements - Excel Import",
       "baseCurrency": "NOK",
@@ -381,5 +383,5 @@
       "GBP_NOK": "British Pounds to Norwegian Kroner"
     }
   },
-  "lastUpdated": "2025-08-17T13:36:30.514Z"
+  "lastUpdated": "2025-08-17T13:51:35.412Z"
 }

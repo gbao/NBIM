@@ -70,9 +70,12 @@ class DashboardGenerator {
         .replace(/{{TOTAL_PROJECTS}}/g, data.metrics.totalProjects.toString())
         .replace(/{{TOTAL_CAPACITY_ALL}}/g, Math.round(data.metrics.totalCapacityAll).toString())
         .replace(/{{TOTAL_CAPACITY}}/g, Math.round(data.metrics.totalCapacityByStake).toString())
+        .replace(/{{AVG_DEPLOYMENT}}/g, (data.metrics.avgInvestmentPerYear / 1000).toFixed(2))
         .replace(/{{OFFSHORE_INVESTMENT}}/g, this.formatCurrency(data.metrics.offshoreInvestmentEur))
-        .replace(/{{OFFSHORE_CAPACITY_GW}}/g, (data.metrics.offshoreCapacityByStake / 1000).toFixed(1))
-        .replace(/{{OFFSHORE_OPERATIONAL_GW}}/g, (data.metrics.offshoreOperationalCapacity / 1000).toFixed(1))
+        .replace(/{{OFFSHORE_PERCENTAGE}}/g, Math.round(data.metrics.offshorePercentageOfTotal).toString())
+        .replace(/{{OFFSHORE_OPERATIONAL_PERCENTAGE}}/g, Math.round(data.metrics.offshoreOperationalPercentage).toString())
+        .replace(/{{OFFSHORE_CAPACITY_GW}}/g, Math.round(data.metrics.offshoreCapacityByStake).toString())
+        .replace(/{{OFFSHORE_OPERATIONAL_GW}}/g, Math.round(data.metrics.offshoreOperationalCapacity).toString())
         .replace(/{{OFFSHORE_CAPACITY}}/g, Math.round(data.metrics.offshoreCapacityByStake).toString())
         .replace(/{{OPERATIONAL_PERCENTAGE}}/g, Math.round(data.metrics.operationalPercentage).toString())
         .replace(/{{INVESTMENTS_TABLE}}/g, this.generateInvestmentsTable(data.investments))
@@ -265,31 +268,36 @@ class DashboardGenerator {
   }
 
   generateInvestmentsTable(investments) {
-    const rows = investments.map(inv => `
+    const rows = investments.map(inv => {
+      // Format status with color coding
+      const currentStatus = this.formatStatus(inv.currentStatus);
+      const technology = this.formatTechnology(inv.technology);
+      const acquisitionCost = inv.acquisitionCostEur || 0;
+      
+      return `
       <tr>
-        <td>${inv.name}</td>
-        <td>€${this.formatNumber(inv.acquisitionCostEur || 0)}M</td>
-        <td>${inv.originalCurrency}</td>
-        <td>${inv.stake || 'N/A'}%</td>
-        <td>${inv.totalCapacity || 'N/A'} MW</td>
-        <td>${inv.nbimCapacity ? Math.round(inv.nbimCapacity) + ' MW' : 'N/A'}</td>
+        <td><strong>${inv.name}</strong></td>
+        <td class="investment-amount">€${this.formatNumber(acquisitionCost)}</td>
+        <td>${inv.stake ? inv.stake : 'N/A'}</td>
+        <td class="capacity-value">${inv.totalCapacity ? inv.totalCapacity.toLocaleString() + ' MW' : 'N/A'}</td>
+        <td class="capacity-value">${inv.nbimCapacity ? Math.round(inv.nbimCapacity).toLocaleString() + ' MW' : 'N/A'}</td>
         <td>${inv.acquisitionYear}</td>
-        <td>${inv.acquisitionMonth || 'Unknown'}</td>
-        <td>${inv.technology}</td>
+        <td>${inv.acquisitionMonth || '-'}</td>
+        <td class="${technology.class}">${technology.text}</td>
         <td>${inv.geography}</td>
-        <td>${inv.operator || 'Unknown'}</td>
-        <td>${inv.acquisitionStatus || 'Unknown'}</td>
-        <td>${inv.currentStatus}</td>
+        <td>${inv.operator || '-'}</td>
+        <td>${inv.acquisitionStatus || '-'}</td>
+        <td class="${currentStatus.class}">${currentStatus.text}</td>
       </tr>
-    `).join('');
+      `;
+    }).join('');
 
     return `
       <table class="data-table">
         <thead>
           <tr>
-            <th>Project</th>
-            <th>Investment (EUR)</th>
-            <th>Original Currency</th>
+            <th>Investment Name</th>
+            <th>Amount (EUR)</th>
             <th>Stake</th>
             <th>Total Capacity</th>
             <th>NBIM Capacity</th>
@@ -298,7 +306,7 @@ class DashboardGenerator {
             <th>Technology</th>
             <th>Geography</th>
             <th>Operator</th>
-            <th>Acquisition Status</th>
+            <th>Acq. Status</th>
             <th>Current Status</th>
           </tr>
         </thead>
@@ -307,6 +315,34 @@ class DashboardGenerator {
         </tbody>
       </table>
     `;
+  }
+
+  formatStatus(status) {
+    if (!status) return { text: '-', class: '' };
+    
+    const statusLower = status.toLowerCase();
+    if (statusLower.includes('operational')) {
+      return { text: 'Operational', class: 'status-operational' };
+    } else if (statusLower.includes('development')) {
+      return { text: 'Development', class: 'status-development' };
+    } else if (statusLower.includes('construction')) {
+      return { text: 'Construction', class: 'status-construction' };
+    } else {
+      return { text: status, class: '' };
+    }
+  }
+
+  formatTechnology(tech) {
+    if (!tech) return { text: '-', class: '' };
+    
+    const techLower = tech.toLowerCase();
+    if (techLower.includes('offshore')) {
+      return { text: tech, class: 'tech-offshore' };
+    } else if (techLower.includes('onshore')) {
+      return { text: tech, class: 'tech-onshore' };
+    } else {
+      return { text: tech, class: '' };
+    }
   }
 
   prepareYearlyChartData(yearlyInvestments) {
