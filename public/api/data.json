@@ -1,77 +1,77 @@
 {
   "metrics": {
-    "totalInvestmentEur": 0,
+    "totalInvestmentEur": 5614.030612244898,
     "totalCapacityByStake": 3309.505,
-    "offshoreInvestmentEur": 0,
+    "offshoreInvestmentEur": 3604.030612244898,
     "offshoreCapacityByStake": 2043.835,
-    "avgInvestmentPerYear": 0,
+    "avgInvestmentPerYear": 1403.5076530612246,
     "yearlyInvestments": {
-      "2021": 0,
-      "2023": 0,
-      "2024": 0,
-      "2025": 0
+      "2021": 1375,
+      "2023": 1030,
+      "2024": 1809.030612244898,
+      "2025": 1400
     },
     "technologyBreakdown": {
       "Offshore Wind": {
-        "value": 0,
+        "value": 3604.030612244898,
         "count": 5,
         "capacity": 2043.835
       },
       "Onshore Wind + Solar": {
-        "value": 0,
+        "value": 907,
         "count": 2,
         "capacity": 950.11
       },
       "Solar": {
-        "value": 0,
+        "value": 203,
         "count": 1,
         "capacity": 315.56
       },
       "Diversified": {
-        "value": 0,
+        "value": 900,
         "count": 1,
         "capacity": 0
       }
     },
     "geographyBreakdown": {
       "Netherlands": {
-        "value": 0,
+        "value": 1375,
         "count": 1
       },
       "Spain & Portugal": {
-        "value": 0,
+        "value": 1110,
         "count": 3
       },
       "Germany": {
-        "value": 0,
+        "value": 1257,
         "count": 2
       },
       "United Kingdom": {
-        "value": 0,
+        "value": 399.030612244898,
         "count": 1
       },
       "Unknown": {
-        "value": 0,
+        "value": 900,
         "count": 1
       },
       "Denmark": {
-        "value": 0,
+        "value": 573,
         "count": 1
       }
     },
     "statusBreakdown": {
-      "operational": 0,
-      "development": 0,
-      "construction": 0
+      "operational": 2577.030612244898,
+      "development": 307,
+      "construction": 1830
     },
-    "operationalPercentage": null,
+    "operationalPercentage": 45.90339437451719,
     "totalProjects": 9
   },
   "investments": [
     {
       "id": "borssele-1-2",
       "name": "Borssele 1 & 2",
-      "acquisitionCost": null,
+      "acquisitionCost": 1375,
       "originalCurrency": "EUR",
       "stake": 0.5,
       "totalCapacity": 752,
@@ -83,13 +83,13 @@
       "technology": "Offshore Wind",
       "geography": "Netherlands",
       "operator": "Ørsted",
-      "acquisitionCostEur": 0,
+      "acquisitionCostEur": 1375,
       "nbimCapacity": 376
     },
     {
       "id": "iberdrola-portoflosolar-onshore-wind-",
       "name": "Iberdrola portoflo-solar  + onshore wind ",
-      "acquisitionCost": null,
+      "acquisitionCost": 600,
       "originalCurrency": "EUR",
       "stake": 0.49,
       "totalCapacity": 1265,
@@ -101,13 +101,13 @@
       "technology": "Onshore Wind + Solar",
       "geography": "Spain & Portugal",
       "operator": "Iberdrola",
-      "acquisitionCostEur": 0,
+      "acquisitionCostEur": 600,
       "nbimCapacity": 619.85
     },
     {
       "id": "he-dreiht",
       "name": "He Dreiht",
-      "acquisitionCost": null,
+      "acquisitionCost": 430,
       "originalCurrency": "EUR",
       "stake": 0.166,
       "totalCapacity": 960,
@@ -119,13 +119,13 @@
       "technology": "Offshore Wind",
       "geography": "Germany",
       "operator": "EnBW",
-      "acquisitionCostEur": 0,
+      "acquisitionCostEur": 430,
       "nbimCapacity": 159.36
     },
     {
       "id": "race-bank",
       "name": "Race Bank",
-      "acquisitionCost": null,
+      "acquisitionCost": 330,
       "originalCurrency": "GBP",
       "stake": 0.375,
       "totalCapacity": 573,
@@ -137,13 +137,13 @@
       "technology": "Offshore Wind",
       "geography": "United Kingdom",
       "operator": "Ørsted",
-      "acquisitionCostEur": 0,
+      "acquisitionCostEur": 399.030612244898,
       "nbimCapacity": 214.875
     },
     {
       "id": "iberdrola-portfolio-spain-portugal-solar-onshore-w",
       "name": "Iberdrola portfolio (Spain & Portugal) – solar + onshore wind ",
-      "acquisitionCost": null,
+      "acquisitionCost": 307,
       "originalCurrency": "EUR",
       "stake": 0.49,
       "totalCapacity": 674,
@@ -155,13 +155,13 @@
       "technology": "Onshore Wind + Solar",
       "geography": "Spain & Portugal",
       "operator": "Iberdrola",
-      "acquisitionCostEur": 0,
+      "acquisitionCostEur": 307,
       "nbimCapacity": 330.26
     },
     {
       "id": "iberdrola-solar-",
       "name": "Iberdrola Solar ",
-      "acquisitionCost": null,
+      "acquisitionCost": 203,
       "originalCurrency": "EUR",
       "stake": 0.49,
       "totalCapacity": 644,
@@ -173,13 +173,13 @@
       "technology": "Solar",
       "geography": "Spain & Portugal",
       "operator": "Iberdrola",
-      "acquisitionCostEur": 0,
+      "acquisitionCostEur": 203,
       "nbimCapacity": 315.56
     },
     {
       "id": "copenhagen-infrastructure-partners",
       "name": "Copenhagen Infrastructure Partners",
-      "acquisitionCost": null,
+      "acquisitionCost": 900,
       "originalCurrency": "EUR",
       "stake": null,
       "totalCapacity": null,
@@ -191,13 +191,13 @@
       "technology": "Diversified",
       "geography": "Unknown",
       "operator": "Unknown",
-      "acquisitionCostEur": 0,
+      "acquisitionCostEur": 900,
       "nbimCapacity": null
     },
     {
       "id": "thor",
       "name": "Thor",
-      "acquisitionCost": null,
+      "acquisitionCost": 573,
       "originalCurrency": "EUR",
       "stake": 0.49,
       "totalCapacity": 1040,
@@ -209,13 +209,13 @@
       "technology": "Offshore Wind",
       "geography": "Denmark",
       "operator": "RWE",
-      "acquisitionCostEur": 0,
+      "acquisitionCostEur": 573,
       "nbimCapacity": 509.6
     },
     {
       "id": "nordseecluster",
       "name": "Nordseecluster",
-      "acquisitionCost": null,
+      "acquisitionCost": 827,
       "originalCurrency": "EUR",
       "stake": 0.49,
       "totalCapacity": 1600,
@@ -227,7 +227,7 @@
       "technology": "Offshore Wind",
       "geography": "Germany",
       "operator": "RWE",
-      "acquisitionCostEur": 0,
+      "acquisitionCostEur": 827,
       "nbimCapacity": 784
     }
   ],
@@ -351,7 +351,7 @@
     }
   ],
   "exchangeRates": {
-    "lastUpdated": "2025-08-17T11:17:47.658Z",
+    "lastUpdated": "2025-08-17T11:31:36.871Z",
     "metadata": {
       "source": "NBIM Financial Statements - Excel Import",
       "baseCurrency": "NOK",
@@ -379,5 +379,5 @@
       "GBP_NOK": "British Pounds to Norwegian Kroner"
     }
   },
-  "lastUpdated": "2025-08-17T11:17:47.637Z"
+  "lastUpdated": "2025-08-17T11:31:36.838Z"
 }

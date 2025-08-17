@@ -374,7 +374,7 @@
                 <div class="live-indicator">Live</div>
                 <div class="last-updated">
                     Last Updated<br>
-                    <strong>17 Aug 2025, 13:17 CEST</strong>
+                    <strong>17 Aug 2025, 11:31 UTC</strong>
                 </div>
             </div>
         </div>
@@ -390,7 +390,7 @@
         <div class="metrics-grid">
             <div class="metric-card">
                 <div class="metric-label">Total Investment</div>
-                <div class="metric-value">€0</div>
+                <div class="metric-value">€5.6B</div>
                 <div class="metric-secondary">9 projects committed</div>
             </div>
 
@@ -402,13 +402,13 @@
 
             <div class="metric-card">
                 <div class="metric-label">Offshore Wind</div>
-                <div class="metric-value">€0</div>
+                <div class="metric-value">€3.6B</div>
                 <div class="metric-secondary">2044 MW capacity</div>
             </div>
 
             <div class="metric-card">
                 <div class="metric-label">Operational</div>
-                <div class="metric-value">NaN%</div>
+                <div class="metric-value">46%</div>
                 <div class="metric-secondary">Assets generating returns</div>
             </div>
         </div>
@@ -492,7 +492,7 @@
           
       <tr>
         <td>Borssele 1 & 2</td>
-        <td>€0M</td>
+        <td>€1.4BM</td>
         <td>EUR</td>
         <td>0.5%</td>
         <td>752 MW</td>
@@ -508,7 +508,7 @@
     
       <tr>
         <td>Iberdrola portoflo-solar  + onshore wind </td>
-        <td>€0M</td>
+        <td>€600M</td>
         <td>EUR</td>
         <td>0.49%</td>
         <td>1265 MW</td>
@@ -524,7 +524,7 @@
     
       <tr>
         <td>He Dreiht</td>
-        <td>€0M</td>
+        <td>€430M</td>
         <td>EUR</td>
         <td>0.166%</td>
         <td>960 MW</td>
@@ -540,7 +540,7 @@
     
       <tr>
         <td>Race Bank</td>
-        <td>€0M</td>
+        <td>€399M</td>
         <td>GBP</td>
         <td>0.375%</td>
         <td>573 MW</td>
@@ -556,7 +556,7 @@
     
       <tr>
         <td>Iberdrola portfolio (Spain & Portugal) – solar + onshore wind </td>
-        <td>€0M</td>
+        <td>€307M</td>
         <td>EUR</td>
         <td>0.49%</td>
         <td>674 MW</td>
@@ -572,7 +572,7 @@
     
       <tr>
         <td>Iberdrola Solar </td>
-        <td>€0M</td>
+        <td>€203M</td>
         <td>EUR</td>
         <td>0.49%</td>
         <td>644 MW</td>
@@ -588,7 +588,7 @@
     
       <tr>
         <td>Copenhagen Infrastructure Partners</td>
-        <td>€0M</td>
+        <td>€900M</td>
         <td>EUR</td>
         <td>N/A%</td>
         <td>N/A MW</td>
@@ -604,7 +604,7 @@
     
       <tr>
         <td>Thor</td>
-        <td>€0M</td>
+        <td>€573M</td>
         <td>EUR</td>
         <td>0.49%</td>
         <td>1040 MW</td>
@@ -620,7 +620,7 @@
     
       <tr>
         <td>Nordseecluster</td>
-        <td>€0M</td>
+        <td>€827M</td>
         <td>EUR</td>
         <td>0.49%</td>
         <td>1600 MW</td>
@@ -658,11 +658,11 @@
         Chart.defaults.color = '#64748b';
 
         // Data from backend
-        const yearlyData = {"labels":["2021","2023","2024","2025"],"datasets":[{"label":"Investment (€M)","data":[0,0,0,0],"backgroundColor":"#667eea","borderColor":"#667eea","borderWidth":1}]};
-        const technologyData = {"labels":["Offshore Wind","Onshore Wind + Solar","Solar","Diversified"],"datasets":[{"data":[0,0,0,0],"backgroundColor":["#667eea","#764ba2","#f093fb","#f5576c"],"borderWidth":2,"borderColor":"#fff"}]};
-        const geographyData = {"labels":["Netherlands","Spain & Portugal","Germany","United Kingdom","Unknown","Denmark"],"datasets":[{"label":"Investment (€M)","data":[0,0,0,0,0,0],"backgroundColor":"#764ba2","borderColor":"#764ba2","borderWidth":1}]};
+        const yearlyData = {"labels":["2021","2023","2024","2025"],"datasets":[{"label":"Investment (€M)","data":[1375,1030,1809,1400],"backgroundColor":"#667eea","borderColor":"#667eea","borderWidth":1}]};
+        const technologyData = {"labels":["Offshore Wind","Onshore Wind + Solar","Solar","Diversified"],"datasets":[{"data":[3604,907,203,900],"backgroundColor":["#667eea","#764ba2","#f093fb","#f5576c"],"borderWidth":2,"borderColor":"#fff"}]};
+        const geographyData = {"labels":["Netherlands","Germany","Spain & Portugal","Unknown","Denmark","United Kingdom"],"datasets":[{"label":"Investment (€M)","data":[1375,1257,1110,900,573,399],"backgroundColor":"#764ba2","borderColor":"#764ba2","borderWidth":1}]};
         const cashflowData = {"labels":["2021","2022","2023","2024"],"datasets":[{"label":"New Investments","data":[-14023,0,-2939,-7541],"borderColor":"#f5576c","backgroundColor":"rgba(245, 87, 108, 0.1)","fill":false},{"label":"Operational Cash Flow","data":[0,0,0,0],"borderColor":"#667eea","backgroundColor":"rgba(102, 126, 234, 0.1)","fill":false},{"label":"Receipts Interest","data":[80,162,397,407],"borderColor":"#4facfe","backgroundColor":"rgba(79, 172, 254, 0.1)","fill":false}]};
-        const exchangeRatesData = {"lastUpdated":"2025-08-17T11:17:47.658Z","metadata":{"source":"NBIM Financial Statements - Excel Import","baseCurrency":"NOK","description":"Exchange rate assumptions used for portfolio calculations","excelFile":"NBIM_ExchangeRates.xlsx"},"rates":{"NOK_EUR":{"2021":10.03,"2022":10.51,"2023":11.22,"2024":11.76,"2025":11.76},"GBP_NOK":{"2021":11.94,"2022":11.85,"2023":12.95,"2024":14.22,"2025":13.56}},"notes":{"NOK_EUR":"Euro per Norwegian Kroner (EUR/NOK rate)","GBP_NOK":"British Pounds to Norwegian Kroner"}};
+        const exchangeRatesData = {"lastUpdated":"2025-08-17T11:31:36.871Z","metadata":{"source":"NBIM Financial Statements - Excel Import","baseCurrency":"NOK","description":"Exchange rate assumptions used for portfolio calculations","excelFile":"NBIM_ExchangeRates.xlsx"},"rates":{"NOK_EUR":{"2021":10.03,"2022":10.51,"2023":11.22,"2024":11.76,"2025":11.76},"GBP_NOK":{"2021":11.94,"2022":11.85,"2023":12.95,"2024":14.22,"2025":13.56}},"notes":{"NOK_EUR":"Euro per Norwegian Kroner (EUR/NOK rate)","GBP_NOK":"British Pounds to Norwegian Kroner"}};
 
         // Generate technology allocation bars
         function generateTechnologyAllocation() {
