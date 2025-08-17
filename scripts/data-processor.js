@@ -39,43 +39,35 @@ class DataProcessor {
     // Already in EUR, return as-is
     if (currency === 'EUR') return cost;
     
-    console.log(`Converting ${cost} ${currency} from ${year} to EUR`);
-    
     if (currency === 'GBP') {
       const gbpToNok = exchangeRates.rates.GBP_NOK[year];
       const eurToNok = exchangeRates.rates.NOK_EUR[year]; // This is EUR/NOK rate
       
-      console.log(`GBP/NOK rate for ${year}: ${gbpToNok}, EUR/NOK rate: ${eurToNok}`);
-      
       if (!gbpToNok || !eurToNok) {
-        console.warn(`❌ Missing exchange rate for ${currency} in ${year}, using original value: ${cost}`);
+        console.warn(`Missing exchange rate for ${currency} in ${year}, using original value`);
         return cost; // Return original if no rate available
       }
       
       // Convert GBP to NOK, then NOK to EUR
       const nokValue = cost * gbpToNok;
       const eurValue = nokValue / eurToNok;
-      console.log(`✅ Converted ${cost} GBP → ${nokValue.toFixed(2)} NOK → ${eurValue.toFixed(2)} EUR`);
       return eurValue;
     }
     
     if (currency === 'NOK') {
       const eurToNok = exchangeRates.rates.NOK_EUR[year]; // This is EUR/NOK rate
       
-      console.log(`EUR/NOK rate for ${year}: ${eurToNok}`);
-      
       if (!eurToNok) {
-        console.warn(`❌ Missing EUR/NOK exchange rate for ${year}, using original value: ${cost}`);
+        console.warn(`Missing EUR/NOK exchange rate for ${year}, using original value`);
         return cost; // Return original if no rate available
       }
       
       const eurValue = cost / eurToNok;
-      console.log(`✅ Converted ${cost} NOK → ${eurValue.toFixed(2)} EUR`);
       return eurValue;
     }
     
     // Unknown currency, warn and return original
-    console.warn(`❌ Unknown currency: ${currency}, using original value: ${cost}`);
+    console.warn(`Unknown currency: ${currency}, using original value`);
     return cost;
   }
 
@@ -90,9 +82,6 @@ class DataProcessor {
     const statusBreakdown = { operational: 0, development: 0, construction: 0 };
 
     acquisitions.investments.forEach((investment, index) => {
-      console.log(`\n🔍 Processing investment ${index + 1}: ${investment.name}`);
-      console.log(`Original: ${investment.acquisitionCost} ${investment.originalCurrency} (${investment.acquisitionYear})`);
-      
       const costInEur = this.convertToEur(
         investment.acquisitionCost,
         investment.originalCurrency,
@@ -101,7 +90,6 @@ class DataProcessor {
       );
 
       totalInvestmentEur += costInEur;
-      console.log(`Running total: €${totalInvestmentEur.toFixed(2)}M`);
 
       // Track yearly investments
       if (!yearlyInvestments[investment.acquisitionYear]) {

@@ -20,6 +20,7 @@ class ExcelToJsonConverter {
         throw new Error('No data found in acquisitions Excel file');
       }
 
+
       const acquisitions = {
         lastUpdated: new Date().toISOString(),
         metadata: {
@@ -31,7 +32,16 @@ class ExcelToJsonConverter {
         investments: data.map((row, index) => {
           // Handle different possible column names - updated for new Excel structure
           const projectName = row['Project Name'] || row['Project'] || row['Name'] || `Project ${index + 1}`;
-          const cost = this.parseNumber(row['Acquisition Cost\n(million)'] || row['Acquisition Cost'] || row['Cost'] || row['Investment']);
+          
+          
+          const cost = this.parseNumber(
+            row['Acquisition Cost\n(million)'] || 
+            row['Acquisition Cost\r\n(million)'] ||
+            row['Acquisition Cost (million)'] || 
+            row['Acquisition Cost'] || 
+            row['Cost'] || 
+            row['Investment']
+          );
           const currency = row['Currency'] || row['Curr'] || 'EUR';
           const stake = this.parseStakePercentage(row['Stake %'] || row['Stake'] || row['Ownership']);
           const capacity = this.parseNumber(row['Total Capacity (MW)'] || row['Total Capacity MW'] || row['Capacity'] || row['MW']);

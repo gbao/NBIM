@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025-08-17T07:49:15.839Z",
+  "lastUpdated": "2025-08-17T11:29:36.464Z",
   "metadata": {
     "totalProjects": 9,
     "dataSource": "NBIM Investment Records - Excel Import",
@@ -10,7 +10,7 @@
     {
       "id": "borssele-1-2",
       "name": "Borssele 1 & 2",
-      "acquisitionCost": null,
+      "acquisitionCost": 1375,
       "originalCurrency": "EUR",
       "stake": 0.5,
       "totalCapacity": 752,
@@ -26,7 +26,7 @@
     {
       "id": "iberdrola-portoflosolar-onshore-wind-",
       "name": "Iberdrola portoflo-solar  + onshore wind ",
-      "acquisitionCost": null,
+      "acquisitionCost": 600,
       "originalCurrency": "EUR",
       "stake": 0.49,
       "totalCapacity": 1265,
@@ -42,7 +42,7 @@
     {
       "id": "he-dreiht",
       "name": "He Dreiht",
-      "acquisitionCost": null,
+      "acquisitionCost": 430,
       "originalCurrency": "EUR",
       "stake": 0.166,
       "totalCapacity": 960,
@@ -58,7 +58,7 @@
     {
       "id": "race-bank",
       "name": "Race Bank",
-      "acquisitionCost": null,
+      "acquisitionCost": 330,
       "originalCurrency": "GBP",
       "stake": 0.375,
       "totalCapacity": 573,
@@ -74,7 +74,7 @@
     {
       "id": "iberdrola-portfolio-spain-portugal-solar-onshore-w",
       "name": "Iberdrola portfolio (Spain & Portugal) – solar + onshore wind ",
-      "acquisitionCost": null,
+      "acquisitionCost": 307,
       "originalCurrency": "EUR",
       "stake": 0.49,
       "totalCapacity": 674,
@@ -90,7 +90,7 @@
     {
       "id": "iberdrola-solar-",
       "name": "Iberdrola Solar ",
-      "acquisitionCost": null,
+      "acquisitionCost": 203,
       "originalCurrency": "EUR",
       "stake": 0.49,
       "totalCapacity": 644,
@@ -106,7 +106,7 @@
     {
       "id": "copenhagen-infrastructure-partners",
       "name": "Copenhagen Infrastructure Partners",
-      "acquisitionCost": null,
+      "acquisitionCost": 900,
       "originalCurrency": "EUR",
       "stake": null,
       "totalCapacity": null,
@@ -122,7 +122,7 @@
     {
       "id": "thor",
       "name": "Thor",
-      "acquisitionCost": null,
+      "acquisitionCost": 573,
       "originalCurrency": "EUR",
       "stake": 0.49,
       "totalCapacity": 1040,
@@ -138,7 +138,7 @@
     {
       "id": "nordseecluster",
       "name": "Nordseecluster",
-      "acquisitionCost": null,
+      "acquisitionCost": 827,
       "originalCurrency": "EUR",
       "stake": 0.49,
       "totalCapacity": 1600,
