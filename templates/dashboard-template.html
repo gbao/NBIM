@@ -115,53 +115,103 @@
             margin-bottom: 3rem;
         }
 
+        /* Professional Metrics Grid */
+        .metrics-section {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .metrics-header {
+            background: #f8fafc;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .metrics-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #2d3748;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+
+        .metrics-period {
+            font-size: 0.75rem;
+            color: #718096;
+            background: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+
         .metrics-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            margin-bottom: 3rem;
+            border-bottom: 1px solid #f1f5f9;
         }
 
-        .metrics-row {
-            display: contents;
+        .metrics-grid.offshore-grid {
+            border-top: 3px solid #1e40af;
         }
 
-        .metric-card {
-            background: white;
-            border-radius: 6px;
-            padding: 1.5rem;
-            border: 1px solid #e2e8f0;
-            transition: box-shadow 0.2s ease;
+        .metric-item {
+            padding: 1.25rem 1.5rem;
+            border-right: 1px solid #f1f5f9;
+            position: relative;
+            min-height: 120px;
         }
 
-        .metric-card:hover {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        .metric-item:last-child {
+            border-right: none;
         }
 
         .metric-label {
-            font-size: 0.75rem;
-            color: #64748b;
-            margin-bottom: 0.25rem;
-            font-weight: 500;
+            font-size: 0.7rem;
+            color: #718096;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
         }
 
         .metric-value {
             font-size: 1.8rem;
-            font-weight: 600;
-            color: #1e293b;
+            font-weight: 300;
+            color: #1a202c;
             margin-bottom: 0.25rem;
+            font-variant-numeric: tabular-nums;
         }
 
-        .metric-secondary {
+        .metric-unit {
             font-size: 0.75rem;
-            color: #64748b;
+            color: #718096;
             margin-bottom: 0.5rem;
         }
 
-        .offshore-row {
-            border-left: 3px solid #1e40af;
+        .metric-change {
+            font-size: 0.7rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .metric-change.positive {
+            color: #38a169;
+        }
+
+        .metric-change.negative {
+            color: #e53e3e;
+        }
+
+        .metric-change.neutral {
+            color: #718096;
         }
 
         .metric-change {
@@ -376,15 +426,16 @@
             <div class="logo-section">
                 <div class="logo">N</div>
                 <div class="brand-text">
-                    <h1>NBIM Portfolio</h1>
-                    <div class="subtitle">Offshore Wind & Renewable Infrastructure</div>
+                    <h1>NORGES BANK INVESTMENT MANAGEMENT</h1>
+                    <div class="subtitle">Unlisted Renewable Infrastructure Portfolio</div>
                 </div>
             </div>
             <div class="status-section">
                 <div class="live-indicator">Live</div>
                 <div class="last-updated">
                     Last Updated<br>
-                    <strong>{{LAST_UPDATED}}</strong>
+                    <strong>2025 H1</strong>
+                    <div style="font-size: 0.7rem; margin-top: 2px;">Based on NBIM latest financial report</div>
                 </div>
             </div>
         </div>
@@ -396,44 +447,75 @@
             <div class="page-subtitle">Real-time tracking of NBIM's offshore wind and renewable infrastructure investments - specialized unlisted infrastructure portfolio</div>
         </div>
 
-        <!-- Key Metrics Grid -->
-        <div class="metrics-grid">
-            <!-- First Row: Portfolio Overview -->
-            <div class="metric-card">
-                <div class="metric-label">Total Investment</div>
-                <div class="metric-value">€{{TOTAL_INVESTMENT}}</div>
-                <div class="metric-secondary">{{TOTAL_PROJECTS}} projects committed</div>
+        <!-- Portfolio Overview Metrics -->
+        <div class="metrics-section">
+            <div class="metrics-header">
+                <div class="metrics-title">Portfolio Overview</div>
+                <div class="metrics-period">2025 H1</div>
             </div>
+            <div class="metrics-grid">
+                <div class="metric-item">
+                    <div class="metric-label">Total AUM</div>
+                    <div class="metric-value">€{{TOTAL_INVESTMENT}}</div>
+                    <div class="metric-unit">Billion</div>
+                    <div class="metric-change positive">
+                        ↗ {{TOTAL_PROJECTS}} Investments
+                    </div>
+                </div>
 
-            <div class="metric-card">
-                <div class="metric-label">Total Capacity</div>
-                <div class="metric-value">{{TOTAL_CAPACITY_ALL}} MW</div>
-                <div class="metric-secondary">Sum of all projects</div>
+                <div class="metric-item">
+                    <div class="metric-label">Total Capacity</div>
+                    <div class="metric-value">{{TOTAL_CAPACITY_ALL}}</div>
+                    <div class="metric-unit">MW</div>
+                    <div class="metric-change neutral">
+                        Sum of all projects
+                    </div>
+                </div>
+
+                <div class="metric-item">
+                    <div class="metric-label">NBIM Stake</div>
+                    <div class="metric-value">{{TOTAL_CAPACITY}}</div>
+                    <div class="metric-unit">MW</div>
+                    <div class="metric-change neutral">
+                        Ownership share
+                    </div>
+                </div>
             </div>
+        </div>
 
-            <div class="metric-card">
-                <div class="metric-label">NBIM Stake</div>
-                <div class="metric-value">{{TOTAL_CAPACITY}} MW</div>
-                <div class="metric-secondary">NBIM ownership share</div>
+        <!-- Offshore Wind Focus -->
+        <div class="metrics-section">
+            <div class="metrics-header">
+                <div class="metrics-title">Offshore Wind Portfolio</div>
+                <div class="metrics-period">Core Focus</div>
             </div>
+            <div class="metrics-grid offshore-grid">
+                <div class="metric-item">
+                    <div class="metric-label">Offshore Investment</div>
+                    <div class="metric-value">€{{OFFSHORE_INVESTMENT}}</div>
+                    <div class="metric-unit">Billion</div>
+                    <div class="metric-change positive">
+                        Core portfolio
+                    </div>
+                </div>
 
-            <!-- Second Row: Offshore Wind Focus -->
-            <div class="metric-card offshore-row">
-                <div class="metric-label">Offshore Wind Investment</div>
-                <div class="metric-value">€{{OFFSHORE_INVESTMENT}}</div>
-                <div class="metric-secondary">Total offshore portfolio</div>
-            </div>
+                <div class="metric-item">
+                    <div class="metric-label">Offshore Capacity</div>
+                    <div class="metric-value">{{OFFSHORE_CAPACITY_GW}}</div>
+                    <div class="metric-unit">GW</div>
+                    <div class="metric-change neutral">
+                        NBIM stake
+                    </div>
+                </div>
 
-            <div class="metric-card offshore-row">
-                <div class="metric-label">Offshore Capacity</div>
-                <div class="metric-value">{{OFFSHORE_CAPACITY_GW}} GW</div>
-                <div class="metric-secondary">NBIM ownership stake</div>
-            </div>
-
-            <div class="metric-card offshore-row">
-                <div class="metric-label">Operational Offshore</div>
-                <div class="metric-value">{{OFFSHORE_OPERATIONAL_GW}} GW</div>
-                <div class="metric-secondary">Currently generating</div>
+                <div class="metric-item">
+                    <div class="metric-label">Operational</div>
+                    <div class="metric-value">{{OFFSHORE_OPERATIONAL_GW}}</div>
+                    <div class="metric-unit">GW</div>
+                    <div class="metric-change positive">
+                        ↗ Generating
+                    </div>
+                </div>
             </div>
         </div>
 
