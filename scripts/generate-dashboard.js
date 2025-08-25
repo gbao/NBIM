@@ -83,6 +83,7 @@ class DashboardGenerator {
         .replace(/{{TECHNOLOGY_CHART_DATA}}/g, JSON.stringify(this.prepareTechnologyChartData(data.metrics.technologyBreakdown)))
         .replace(/{{GEOGRAPHY_CHART_DATA}}/g, JSON.stringify(this.prepareGeographyChartData(data.metrics.geographyBreakdown)))
         .replace(/{{CASHFLOW_CHART_DATA}}/g, JSON.stringify(this.prepareCashflowChartData(data.cashflow.fullYearData)))
+        .replace(/{{OFFSHORE_BUBBLE_CHART_DATA}}/g, JSON.stringify(this.prepareOffshoreWindBubbleData(data.investments)))
         .replace(/{{EXCHANGE_RATES_DATA}}/g, JSON.stringify(data.exchangeRates));
         
     } catch (error) {
@@ -277,7 +278,7 @@ class DashboardGenerator {
       return `
       <tr>
         <td><strong>${inv.name}</strong></td>
-        <td class="investment-amount">€${this.formatNumber(acquisitionCost)}</td>
+        <td class="investment-amount">${this.formatMillions(acquisitionCost)}</td>
         <td>${inv.stake ? inv.stake : 'N/A'}</td>
         <td class="capacity-value">${inv.totalCapacity ? inv.totalCapacity.toLocaleString() + ' MW' : 'N/A'}</td>
         <td class="capacity-value">${inv.nbimCapacity ? Math.round(inv.nbimCapacity).toLocaleString() + ' MW' : 'N/A'}</td>
@@ -297,7 +298,7 @@ class DashboardGenerator {
         <thead>
           <tr>
             <th>Investment Name</th>
-            <th>Amount (EUR)</th>
+            <th>Amount (mEUR)</th>
             <th>Stake</th>
             <th>Total Capacity</th>
             <th>NBIM Capacity</th>
@@ -315,6 +316,84 @@ class DashboardGenerator {
         </tbody>
       </table>
     `;
+  }
+
+  prepareOffshoreWindBubbleData(investments) {
+    // Filter for offshore wind projects only
+    const offshoreProjects = investments.filter(inv => 
+      inv.technology && inv.technology.toLowerCase().includes('offshore wind')
+    );
+
+    const operationalData = [];
+    const constructionData = [];
+    const developmentData = [];
+
+    offshoreProjects.forEach(project => {
+      const acquisitionCost = project.acquisitionCostEur || 0;
+      const totalCapacity = project.totalCapacity || 0;
+      const stake = project.stake || 0;
+      const acquisitionYear = project.acquisitionYear || 0;
+      
+      if (acquisitionCost > 0 && totalCapacity > 0 && stake > 0 && acquisitionYear > 0) {
+        // Calculate EV/MW using same formula as implied equity valuation: (acquisition cost / stake %) / capacity
+        const evPerMW = (acquisitionCost / stake) / totalCapacity;
+        
+        // Calculate enterprise value (implied total project value)
+        const enterpriseValue = acquisitionCost / stake;
+        
+        const bubbleData = {
+          x: acquisitionYear, // X-axis: Acquisition Year
+          y: evPerMW, // Y-axis: EV per MW (Enterprise Value per MW)
+          r: Math.sqrt(totalCapacity / 30), // Bubble size based on total capacity (scaled for visibility)
+          name: project.name,
+          evPerMW: evPerMW,
+          acquisitionCost: acquisitionCost,
+          enterpriseValue: enterpriseValue,
+          totalCapacity: totalCapacity,
+          stake: stake,
+          geography: project.geography || 'Unknown',
+          year: acquisitionYear,
+          operator: project.operator || 'Unknown',
+          currentStatus: project.currentStatus || 'Unknown'
+        };
+        
+        // Categorize by current status for color coding
+        const status = (project.currentStatus || '').toLowerCase();
+        if (status.includes('operational')) {
+          operationalData.push(bubbleData);
+        } else if (status.includes('construction')) {
+          constructionData.push(bubbleData);
+        } else {
+          developmentData.push(bubbleData);
+        }
+      }
+    });
+
+    return {
+      datasets: [
+        {
+          label: 'Operational',
+          data: operationalData,
+          backgroundColor: 'rgba(34, 197, 94, 0.7)',
+          borderColor: '#22c55e',
+          borderWidth: 2
+        },
+        {
+          label: 'Under Construction',
+          data: constructionData,
+          backgroundColor: 'rgba(124, 58, 237, 0.7)',
+          borderColor: '#7c3aed',
+          borderWidth: 2
+        },
+        {
+          label: 'Development',
+          data: developmentData,
+          backgroundColor: 'rgba(245, 158, 11, 0.7)',
+          borderColor: '#f59e0b',
+          borderWidth: 2
+        }
+      ]
+    };
   }
 
   formatStatus(status) {
@@ -437,6 +516,13 @@ class DashboardGenerator {
     if (num >= 1000) {
       return (num / 1000).toFixed(1) + 'B';
     }
+    return Math.round(num).toString();
+  }
+
+  formatMillions(num) {
+    // Convert to millions (assuming input is already in millions EUR)
+    // If input is 1375 (meaning 1375M EUR), return "1375"
+    // If input is 600 (meaning 600M EUR), return "600"
     return Math.round(num).toString();
   }
 

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NBIM Offshore Wind Investment Dashboard</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/1.4.0/chartjs-plugin-annotation.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -604,43 +605,7 @@
             </div>
         </div>
 
-        <!-- Geographic Distribution -->
-        <div class="chart-section">
-            <div class="chart-header">
-                <div class="chart-title">Geographic Distribution (Under Construction)</div>
-            </div>
-        </div>
 
-
-        <!-- Charts Section -->
-        <div class="chart-section">
-            <div class="chart-header">
-                <div class="chart-title">Investment by Year</div>
-            </div>
-            <div class="chart-container">
-                <canvas id="yearlyChart"></canvas>
-            </div>
-        </div>
-
-        <div class="chart-section">
-            <div class="chart-header">
-                <div class="chart-title">Cash Flow Analysis</div>
-            </div>
-            <div class="chart-container">
-                <canvas id="cashFlowChart"></canvas>
-            </div>
-        </div>
-
-        <!-- Exchange Rates -->
-        <div class="exchange-rates-section">
-            <div class="allocation-header">
-                <div class="allocation-title">Exchange Rate Assumptions</div>
-                <div class="metric-secondary">EUR/NOK rates used for calculations</div>
-            </div>
-            <div class="rates-grid" id="exchangeRates">
-                <!-- Dynamic content -->
-            </div>
-        </div>
 
         <!-- Investment Details Table -->
         <div class="data-table-section">
@@ -653,7 +618,7 @@
         <thead>
           <tr>
             <th>Investment Name</th>
-            <th>Amount (EUR)</th>
+            <th>Amount (mEUR)</th>
             <th>Stake</th>
             <th>Total Capacity</th>
             <th>NBIM Capacity</th>
@@ -670,7 +635,7 @@
           
       <tr>
         <td><strong>Borssele 1 & 2</strong></td>
-        <td class="investment-amount">€1.4B</td>
+        <td class="investment-amount">1375</td>
         <td>0.5</td>
         <td class="capacity-value">752 MW</td>
         <td class="capacity-value">376 MW</td>
@@ -685,7 +650,7 @@
       
       <tr>
         <td><strong>Iberdrola portoflo-solar  + onshore wind </strong></td>
-        <td class="investment-amount">€600</td>
+        <td class="investment-amount">600</td>
         <td>0.49</td>
         <td class="capacity-value">1,265 MW</td>
         <td class="capacity-value">620 MW</td>
@@ -700,7 +665,7 @@
       
       <tr>
         <td><strong>He Dreiht</strong></td>
-        <td class="investment-amount">€430</td>
+        <td class="investment-amount">430</td>
         <td>0.166</td>
         <td class="capacity-value">960 MW</td>
         <td class="capacity-value">159 MW</td>
@@ -715,7 +680,7 @@
       
       <tr>
         <td><strong>Race Bank</strong></td>
-        <td class="investment-amount">€399</td>
+        <td class="investment-amount">399</td>
         <td>0.375</td>
         <td class="capacity-value">573 MW</td>
         <td class="capacity-value">215 MW</td>
@@ -730,7 +695,7 @@
       
       <tr>
         <td><strong>Iberdrola portfolio (Spain & Portugal) – solar + onshore wind </strong></td>
-        <td class="investment-amount">€307</td>
+        <td class="investment-amount">307</td>
         <td>0.49</td>
         <td class="capacity-value">674 MW</td>
         <td class="capacity-value">330 MW</td>
@@ -745,7 +710,7 @@
       
       <tr>
         <td><strong>Iberdrola Solar </strong></td>
-        <td class="investment-amount">€203</td>
+        <td class="investment-amount">203</td>
         <td>0.49</td>
         <td class="capacity-value">644 MW</td>
         <td class="capacity-value">316 MW</td>
@@ -760,7 +725,7 @@
       
       <tr>
         <td><strong>Copenhagen Infrastructure Partners</strong></td>
-        <td class="investment-amount">€900</td>
+        <td class="investment-amount">900</td>
         <td>N/A</td>
         <td class="capacity-value">N/A</td>
         <td class="capacity-value">N/A</td>
@@ -775,7 +740,7 @@
       
       <tr>
         <td><strong>Thor</strong></td>
-        <td class="investment-amount">€573</td>
+        <td class="investment-amount">573</td>
         <td>0.49</td>
         <td class="capacity-value">1,040 MW</td>
         <td class="capacity-value">510 MW</td>
@@ -790,7 +755,7 @@
       
       <tr>
         <td><strong>Nordseecluster</strong></td>
-        <td class="investment-amount">€827</td>
+        <td class="investment-amount">827</td>
         <td>0.49</td>
         <td class="capacity-value">1,600 MW</td>
         <td class="capacity-value">784 MW</td>
@@ -806,6 +771,19 @@
         </tbody>
       </table>
     
+        </div>
+
+        <!-- Offshore Wind M&A Analysis Bubble Chart -->
+        <div class="chart-section">
+            <div class="chart-header">
+                <div class="chart-title">🎯 Offshore Wind M&A Timeline Analysis</div>
+                <div style="font-size: 0.875rem; color: #64748b; margin-top: 0.5rem;">
+                    Enterprise Value per MW analysis over time • Color-coded by project status • Bubble size = total capacity
+                </div>
+            </div>
+            <div class="chart-container" style="height: 450px;">
+                <canvas id="offshoreWindBubbleChart"></canvas>
+            </div>
         </div>
 
         <!-- Cashflow Table -->
@@ -831,6 +809,7 @@
         const technologyData = {"labels":["Offshore Wind","Onshore Wind + Solar","Solar","Diversified"],"datasets":[{"data":[3604,907,203,900],"backgroundColor":["#667eea","#764ba2","#f093fb","#f5576c"],"borderWidth":2,"borderColor":"#fff"}]};
         const geographyData = {"labels":["Netherlands","Germany","Spain & Portugal","Unknown","Denmark","United Kingdom"],"datasets":[{"label":"Investment (€M)","data":[1375,1257,1110,900,573,399],"backgroundColor":"#764ba2","borderColor":"#764ba2","borderWidth":1}]};
         const cashflowData = {"labels":["2021","2022","2023","2024"],"datasets":[{"label":"New Investments","data":[-14023,0,-2939,-7541],"borderColor":"#f5576c","backgroundColor":"rgba(245, 87, 108, 0.1)","fill":false},{"label":"Operational Cash Flow","data":[0,0,0,0],"borderColor":"#667eea","backgroundColor":"rgba(102, 126, 234, 0.1)","fill":false},{"label":"Receipts Interest","data":[80,162,397,407],"borderColor":"#4facfe","backgroundColor":"rgba(79, 172, 254, 0.1)","fill":false}]};
+        const offshoreWindBubbleData = {"datasets":[{"label":"Operational","data":[{"x":2021,"y":3.6569148936170213,"r":5.00666222813829,"name":"Borssele 1 & 2","evPerMW":3.6569148936170213,"acquisitionCost":1375,"enterpriseValue":2750,"totalCapacity":752,"stake":0.5,"geography":"Netherlands","year":2021,"operator":"Ørsted","currentStatus":"Operational "},{"x":2024,"y":1.8570360081205262,"r":4.370354676682432,"name":"Race Bank","evPerMW":1.8570360081205262,"acquisitionCost":399.030612244898,"enterpriseValue":1064.0816326530614,"totalCapacity":573,"stake":0.375,"geography":"United Kingdom","year":2024,"operator":"Ørsted","currentStatus":"Operational "}],"backgroundColor":"rgba(34, 197, 94, 0.7)","borderColor":"#22c55e","borderWidth":2},{"label":"Under Construction","data":[{"x":2023,"y":2.6982931726907626,"r":5.656854249492381,"name":"He Dreiht","evPerMW":2.6982931726907626,"acquisitionCost":430,"enterpriseValue":2590.3614457831322,"totalCapacity":960,"stake":0.166,"geography":"Germany","year":2023,"operator":"EnBW","currentStatus":"Under Construction"},{"x":2025,"y":1.1244113029827314,"r":5.887840577551898,"name":"Thor","evPerMW":1.1244113029827314,"acquisitionCost":573,"enterpriseValue":1169.3877551020407,"totalCapacity":1040,"stake":0.49,"geography":"Denmark","year":2025,"operator":"RWE","currentStatus":"Under Construction"},{"x":2025,"y":1.0548469387755102,"r":7.302967433402215,"name":"Nordseecluster","evPerMW":1.0548469387755102,"acquisitionCost":827,"enterpriseValue":1687.7551020408164,"totalCapacity":1600,"stake":0.49,"geography":"Germany","year":2025,"operator":"RWE","currentStatus":"Under Construction"}],"backgroundColor":"rgba(124, 58, 237, 0.7)","borderColor":"#7c3aed","borderWidth":2},{"label":"Development","data":[],"backgroundColor":"rgba(245, 158, 11, 0.7)","borderColor":"#f59e0b","borderWidth":2}]};
         const exchangeRatesData = {"lastUpdated":"2025-08-17T13:51:35.431Z","metadata":{"source":"NBIM Financial Statements - Excel Import","baseCurrency":"NOK","description":"Exchange rate assumptions used for portfolio calculations","excelFile":"NBIM_ExchangeRates.xlsx"},"rates":{"NOK_EUR":{"2021":10.03,"2022":10.51,"2023":11.22,"2024":11.76,"2025":11.76},"GBP_NOK":{"2021":11.94,"2022":11.85,"2023":12.95,"2024":14.22,"2025":13.56}},"notes":{"NOK_EUR":"Euro per Norwegian Kroner (EUR/NOK rate)","GBP_NOK":"British Pounds to Norwegian Kroner"}};
 
         // Generate technology allocation bars
@@ -855,28 +834,259 @@
             });
         }
 
-        // Geographic Distribution Pie Chart
-        const ctx3 = document.getElementById('geographyChart').getContext('2d');
-        new Chart(ctx3, {
-            type: 'doughnut',
-            data: geographyData,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'right',
-                        labels: {
-                            boxWidth: 12,
-                            usePointStyle: true,
-                            pointStyle: 'circle',
-                            padding: 20
+
+        // Offshore Wind M&A Analysis Bubble Chart
+        console.log('Offshore Wind Bubble Data:', offshoreWindBubbleData);
+        const bubbleCanvas = document.getElementById('offshoreWindBubbleChart');
+        
+        if (bubbleCanvas) {
+        
+        const ctx4 = bubbleCanvas.getContext('2d');
+        
+        // Custom plugin to draw labels on bubbles with smart positioning and trend arrow
+        const bubbleLabelPlugin = {
+            id: 'bubbleLabels',
+            afterDatasetsDraw: function(chart) {
+                const ctx = chart.ctx;
+                
+                // Collect all data points for overlap detection
+                const allPoints = [];
+                chart.data.datasets.forEach((dataset, datasetIndex) => {
+                    const meta = chart.getDatasetMeta(datasetIndex);
+                    meta.data.forEach((point, index) => {
+                        const data = dataset.data[index];
+                        if (data && data.name) {
+                            const position = point.getProps(['x', 'y']);
+                            const nbimCapacity = Math.round(data.totalCapacity * data.stake);
+                            allPoints.push({
+                                position,
+                                data,
+                                nbimCapacity,
+                                point,
+                                datasetIndex,
+                                index
+                            });
+                        }
+                    });
+                });
+                
+                // Sort points by year and EV/MW for consistent positioning
+                allPoints.sort((a, b) => {
+                    if (a.data.year !== b.data.year) return a.data.year - b.data.year;
+                    return b.data.evPerMW - a.data.evPerMW;
+                });
+                
+                // Draw trend arrow from highest EV/MW (2021) to lowest (2025)
+                if (allPoints.length >= 2) {
+                    const firstPoint = allPoints[0]; // Highest EV/MW (2021)
+                    const lastPoint = allPoints[allPoints.length - 1]; // Lowest EV/MW (2025)
+                    
+                    ctx.save();
+                    ctx.strokeStyle = '#64748b';
+                    ctx.lineWidth = 2;
+                    ctx.setLineDash([5, 5]);
+                    
+                    // Draw dashed line
+                    ctx.beginPath();
+                    ctx.moveTo(firstPoint.position.x, firstPoint.position.y - 20);
+                    ctx.lineTo(lastPoint.position.x, lastPoint.position.y - 20);
+                    ctx.stroke();
+                    
+                    // Draw arrow head
+                    ctx.setLineDash([]);
+                    ctx.fillStyle = '#64748b';
+                    ctx.beginPath();
+                    ctx.moveTo(lastPoint.position.x, lastPoint.position.y - 20);
+                    ctx.lineTo(lastPoint.position.x - 8, lastPoint.position.y - 26);
+                    ctx.lineTo(lastPoint.position.x - 8, lastPoint.position.y - 14);
+                    ctx.closePath();
+                    ctx.fill();
+                    
+                    // Add trend label
+                    ctx.font = '9px -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif';
+                    ctx.fillStyle = '#64748b';
+                    ctx.textAlign = 'center';
+                    const midX = (firstPoint.position.x + lastPoint.position.x) / 2;
+                    ctx.fillText('EV/MW Declining Trend', midX, firstPoint.position.y - 30);
+                    
+                    ctx.restore();
+                }
+                
+                // Draw labels with overlap detection
+                allPoints.forEach((pointData, i) => {
+                    const { position, data, nbimCapacity, point } = pointData;
+                    
+                    // Get bubble radius for positioning
+                    const bubbleRadius = point.options.radius || 10;
+                    const labelOffset = bubbleRadius + 8;
+                    
+                    // Check for overlapping points (same year and similar EV/MW)
+                    let labelSide = 'right'; // default to right
+                    let verticalOffset = 0;
+                    
+                    // Find overlapping points
+                    const overlapping = allPoints.filter((otherPoint, j) => {
+                        if (i === j) return false;
+                        const sameYear = Math.abs(otherPoint.data.year - data.year) < 0.1;
+                        const similarEV = Math.abs(otherPoint.data.evPerMW - data.evPerMW) < 0.3;
+                        return sameYear && similarEV;
+                    });
+                    
+                    // If overlapping, alternate positioning
+                    if (overlapping.length > 0) {
+                        const currentIndex = allPoints.indexOf(pointData);
+                        const overlappingIndex = allPoints.indexOf(overlapping[0]);
+                        
+                        if (currentIndex > overlappingIndex) {
+                            labelSide = 'left'; // Put second point on left
+                            verticalOffset = 20; // Slightly lower
                         }
                     }
-                },
-                cutout: '50%'
+                    
+                    ctx.save();
+                    
+                    // Format text according to requested pattern: (Name, Capacity) - EV/MW
+                    const projectName = data.name.length > 15 ? data.name.substring(0, 15) + '...' : data.name;
+                    const labelText = `(${projectName}, ${nbimCapacity} MW) - ${data.evPerMW.toFixed(1)}M/MW`;
+                    
+                    // Position text based on side
+                    let textX, textAlign;
+                    if (labelSide === 'right') {
+                        textX = position.x + labelOffset;
+                        textAlign = 'left';
+                    } else {
+                        textX = position.x - labelOffset;
+                        textAlign = 'right';
+                    }
+                    const textY = position.y + verticalOffset;
+                    
+                    // Measure text for background
+                    ctx.font = '10px -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif';
+                    const textWidth = ctx.measureText(labelText).width;
+                    
+                    // Calculate background position
+                    const bgX = textAlign === 'left' ? textX - 3 : textX - textWidth - 3;
+                    
+                    // Draw subtle background rectangle
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+                    ctx.fillRect(bgX, textY - 8, textWidth + 6, 16);
+                    
+                    // Draw border
+                    ctx.strokeStyle = 'rgba(226, 232, 240, 0.8)';
+                    ctx.lineWidth = 1;
+                    ctx.strokeRect(bgX, textY - 8, textWidth + 6, 16);
+                    
+                    // Draw text
+                    ctx.textAlign = textAlign;
+                    ctx.textBaseline = 'middle';
+                    ctx.fillStyle = '#1e293b';
+                    ctx.fillText(labelText, textX, textY);
+                    
+                    ctx.restore();
+                });
             }
-        });
+        };
+        
+        try {
+            const offshoreChart = new Chart(ctx4, {
+                type: 'bubble',
+                data: offshoreWindBubbleData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: false
+                        },
+                        legend: {
+                            position: 'top',
+                            align: 'center',
+                            labels: {
+                                boxWidth: 12,
+                                usePointStyle: true,
+                                padding: 20,
+                                font: {
+                                    size: 12
+                                },
+                                generateLabels: function(chart) {
+                                    const datasets = chart.data.datasets;
+                                    return datasets.map((dataset, index) => {
+                                        return {
+                                            text: '● ' + dataset.label,
+                                            fillStyle: dataset.borderColor,
+                                            strokeStyle: dataset.borderColor,
+                                            hidden: false,
+                                            datasetIndex: index
+                                        };
+                                    });
+                                }
+                            }
+                        },
+                        tooltip: {
+                            enabled: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Acquisition Year',
+                                color: '#475569',
+                                font: {
+                                    weight: 600
+                                }
+                            },
+                            grid: {
+                                color: '#f1f5f9',
+                                drawBorder: false
+                            },
+                            border: {
+                                display: false
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return value.toString();
+                                },
+                                stepSize: 1
+                            },
+                            min: 2020,
+                            max: 2026
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'EV/MW (€M per MW)',
+                                color: '#475569',
+                                font: {
+                                    weight: 600
+                                }
+                            },
+                            grid: {
+                                color: '#f1f5f9',
+                                drawBorder: false
+                            },
+                            border: {
+                                display: false
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return '€' + value.toFixed(2);
+                                }
+                            }
+                        }
+                    },
+                    interaction: {
+                        mode: 'index',
+                        intersect: false
+                    }
+                },
+                plugins: [bubbleLabelPlugin]
+            });
+            console.log('Offshore wind bar chart created successfully:', offshoreChart);
+        } catch (error) {
+            console.error('Error creating offshore wind bar chart:', error);
+        }
+        }
 
         // Generate exchange rates display
         function generateExchangeRates() {
@@ -896,75 +1106,7 @@
             }
         }
 
-        // Investment by Year Chart
-        const ctx1 = document.getElementById('yearlyChart').getContext('2d');
-        new Chart(ctx1, {
-            type: 'bar',
-            data: yearlyData,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false }
-                },
-                scales: {
-                    x: {
-                        grid: { display: false },
-                        border: { display: false }
-                    },
-                    y: {
-                        grid: { color: '#f1f5f9', drawBorder: false },
-                        border: { display: false },
-                        ticks: {
-                            callback: function(value) {
-                                return '€' + (value/1000).toFixed(1) + 'B';
-                            }
-                        }
-                    }
-                }
-            }
-        });
 
-        // Cash Flow Chart
-        const ctx2 = document.getElementById('cashFlowChart').getContext('2d');
-        new Chart(ctx2, {
-            type: 'line',
-            data: cashflowData,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                        align: 'end',
-                        labels: {
-                            boxWidth: 12,
-                            usePointStyle: true,
-                            pointStyle: 'circle'
-                        }
-                    }
-                },
-                scales: {
-                    x: {
-                        grid: { display: false },
-                        border: { display: false }
-                    },
-                    y: {
-                        grid: { color: '#f1f5f9', drawBorder: false },
-                        border: { display: false },
-                        ticks: {
-                            callback: function(value) {
-                                return 'NOK ' + (value/1000).toFixed(0) + 'B';
-                            }
-                        }
-                    }
-                },
-                elements: {
-                    point: { hoverRadius: 6 },
-                    line: { tension: 0.4 }
-                }
-            }
-        });
 
         // Initialize allocations and rates
         generateTechnologyAllocation();
