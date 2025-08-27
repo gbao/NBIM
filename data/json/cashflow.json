@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025-08-17T13:51:35.424Z",
+  "lastUpdated": "2025-08-27T15:00:30.347Z",
   "metadata": {
     "source": "NBIM Unlisted Infrastructure Reports - Excel Import",
     "currency": "NOK millions",
@@ -16,8 +16,8 @@
       "payments_new_investments": -14023,
       "payments_development_assets": 0,
       "receipts_from_ongoing_ops": 0,
-      "net_cf_to_from_investments": 0,
-      "net_cf_unlisted_infra": 0,
+      "net_cf_to_from_investments": -14023,
+      "net_cf_unlisted_infra": -14023,
       "cash_flow_from_ongoing_ops": 0
     },
     {
@@ -28,10 +28,10 @@
       "receipts_interest_div_total": 0,
       "payments_new_investments": -14023,
       "payments_development_assets": 0,
-      "receipts_from_ongoing_ops": 0,
-      "net_cf_to_from_investments": 0,
-      "net_cf_unlisted_infra": 0,
-      "cash_flow_from_ongoing_ops": 0
+      "receipts_from_ongoing_ops": 648,
+      "net_cf_to_from_investments": -13375,
+      "net_cf_unlisted_infra": -13295,
+      "cash_flow_from_ongoing_ops": 728
     },
     {
       "year": 2022,
@@ -41,10 +41,10 @@
       "receipts_interest_div_total": 0,
       "payments_new_investments": 0,
       "payments_development_assets": 0,
-      "receipts_from_ongoing_ops": 0,
-      "net_cf_to_from_investments": 0,
-      "net_cf_unlisted_infra": 0,
-      "cash_flow_from_ongoing_ops": 0
+      "receipts_from_ongoing_ops": 373,
+      "net_cf_to_from_investments": 373,
+      "net_cf_unlisted_infra": 469,
+      "cash_flow_from_ongoing_ops": 469
     },
     {
       "year": 2022,
@@ -54,10 +54,10 @@
       "receipts_interest_div_total": 0,
       "payments_new_investments": 0,
       "payments_development_assets": 0,
-      "receipts_from_ongoing_ops": 0,
-      "net_cf_to_from_investments": 0,
-      "net_cf_unlisted_infra": 0,
-      "cash_flow_from_ongoing_ops": 0
+      "receipts_from_ongoing_ops": 1143,
+      "net_cf_to_from_investments": 1143,
+      "net_cf_unlisted_infra": 1305,
+      "cash_flow_from_ongoing_ops": 1305
     },
     {
       "year": 2023,
@@ -67,10 +67,10 @@
       "receipts_interest_div_total": 0,
       "payments_new_investments": -2643,
       "payments_development_assets": 0,
-      "receipts_from_ongoing_ops": 0,
-      "net_cf_to_from_investments": 0,
-      "net_cf_unlisted_infra": 0,
-      "cash_flow_from_ongoing_ops": 0
+      "receipts_from_ongoing_ops": 720,
+      "net_cf_to_from_investments": -1923,
+      "net_cf_unlisted_infra": -1466,
+      "cash_flow_from_ongoing_ops": 1177
     },
     {
       "year": 2023,
@@ -80,10 +80,10 @@
       "receipts_interest_div_total": 0,
       "payments_new_investments": -2939,
       "payments_development_assets": -1071,
-      "receipts_from_ongoing_ops": 0,
-      "net_cf_to_from_investments": 0,
-      "net_cf_unlisted_infra": 0,
-      "cash_flow_from_ongoing_ops": 0
+      "receipts_from_ongoing_ops": 755,
+      "net_cf_to_from_investments": -3255,
+      "net_cf_unlisted_infra": -2503,
+      "cash_flow_from_ongoing_ops": 1507
     },
     {
       "year": 2024,
@@ -93,10 +93,10 @@
       "receipts_interest_div_total": 0,
       "payments_new_investments": -4941,
       "payments_development_assets": -436,
-      "receipts_from_ongoing_ops": 0,
-      "net_cf_to_from_investments": 0,
-      "net_cf_unlisted_infra": 0,
-      "cash_flow_from_ongoing_ops": 0
+      "receipts_from_ongoing_ops": 275,
+      "net_cf_to_from_investments": -5102,
+      "net_cf_unlisted_infra": -4870,
+      "cash_flow_from_ongoing_ops": 507
     },
     {
       "year": 2024,
@@ -106,10 +106,10 @@
       "receipts_interest_div_total": 0,
       "payments_new_investments": -7541,
       "payments_development_assets": -681,
-      "receipts_from_ongoing_ops": 0,
-      "net_cf_to_from_investments": 0,
-      "net_cf_unlisted_infra": 0,
-      "cash_flow_from_ongoing_ops": 0
+      "receipts_from_ongoing_ops": 608,
+      "net_cf_to_from_investments": -7614,
+      "net_cf_unlisted_infra": -7174,
+      "cash_flow_from_ongoing_ops": 1048
     },
     {
       "year": 2025,
@@ -119,10 +119,10 @@
       "receipts_interest_div_total": 0,
       "payments_new_investments": -20387,
       "payments_development_assets": -260,
-      "receipts_from_ongoing_ops": 0,
-      "net_cf_to_from_investments": 0,
-      "net_cf_unlisted_infra": 0,
-      "cash_flow_from_ongoing_ops": 0
+      "receipts_from_ongoing_ops": 174,
+      "net_cf_to_from_investments": -20473,
+      "net_cf_unlisted_infra": -20034,
+      "cash_flow_from_ongoing_ops": 613
     }
   ]
 }

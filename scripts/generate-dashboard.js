@@ -17,7 +17,7 @@ class DashboardGenerator {
       const rawData = await this.dataProcessor.loadData();
       const metrics = this.dataProcessor.calculateMetrics(rawData.acquisitions, rawData.exchangeRates);
       const investmentsTable = this.dataProcessor.processInvestmentsForTable(rawData.acquisitions, rawData.exchangeRates);
-      const cashflowData = this.dataProcessor.processCashflowData(rawData.cashflow);
+      const cashflowData = this.dataProcessor.processCashflowData(rawData.cashflow, rawData.exchangeRates);
 
       // Generate dashboard HTML
       const dashboardHtml = await this.generateDashboardHtml({
@@ -82,7 +82,10 @@ class DashboardGenerator {
         .replace(/{{YEARLY_CHART_DATA}}/g, JSON.stringify(this.prepareYearlyChartData(data.metrics.yearlyInvestments)))
         .replace(/{{TECHNOLOGY_CHART_DATA}}/g, JSON.stringify(this.prepareTechnologyChartData(data.metrics.technologyBreakdown)))
         .replace(/{{GEOGRAPHY_CHART_DATA}}/g, JSON.stringify(this.prepareGeographyChartData(data.metrics.geographyBreakdown)))
-        .replace(/{{CASHFLOW_CHART_DATA}}/g, JSON.stringify(this.prepareCashflowChartData(data.cashflow.fullYearData)))
+        .replace(/{{CASHFLOW_CHART_DATA}}/g, JSON.stringify({
+          chartData: this.prepareCashflowChartData(data.cashflow.fullYearData),
+          allData: data.cashflow.allData
+        }))
         .replace(/{{OFFSHORE_BUBBLE_CHART_DATA}}/g, JSON.stringify(this.prepareOffshoreWindBubbleData(data.investments)))
         .replace(/{{EXCHANGE_RATES_DATA}}/g, JSON.stringify(data.exchangeRates));
         

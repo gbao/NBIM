@@ -553,7 +553,7 @@
 
                 <div class="metric-item">
                     <div class="metric-label">AVG. DEPLOYMENT**</div>
-                    <div class="metric-value">1.40</div>
+                    <div class="metric-value">€1.40</div>
                     <div class="metric-unit">Billion p.a.</div>
                     <div class="metric-change neutral">
                         2021 -2025
@@ -776,9 +776,9 @@
         <!-- Offshore Wind M&A Analysis Bubble Chart -->
         <div class="chart-section">
             <div class="chart-header">
-                <div class="chart-title">🎯 Offshore Wind M&A Timeline Analysis</div>
+                <div class="chart-title">🎯 Offshore Wind M&A Transaction Analysis</div>
                 <div style="font-size: 0.875rem; color: #64748b; margin-top: 0.5rem;">
-                    Enterprise Value per MW analysis over time • Color-coded by project status • Bubble size = total capacity
+                    Enterprise Value per MW analysis over time • Color-coded by project status • Bubble size = NBIM's capacity
                 </div>
             </div>
             <div class="chart-container" style="height: 450px;">
@@ -786,11 +786,28 @@
             </div>
         </div>
 
+        <!-- Exchange Rate Assumptions -->
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 16px; margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px;">
+                <div>
+                    <h4 style="font-size: 11px; font-weight: 600; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 8px 0;">Exchange Rate Assumptions (NOK/EUR)</h4>
+                    <div style="display: flex; gap: 16px; align-items: center;">
+                        <div id="exchangeRatesInline" style="display: flex; gap: 12px; font-size: 10px; color: #64748b;">
+                            <!-- Dynamic rates will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+                <div style="font-size: 9px; color: #94a3b8; text-align: right; line-height: 1.3;">
+                    Based on NBIM<br>financial report
+                </div>
+            </div>
+        </div>
+
         <!-- Cashflow Table -->
         <div class="data-table-section">
             <div class="table-header">
                 <div class="table-title">Cash Flow Analysis</div>
-                <div class="metric-secondary">All figures in NOK millions</div>
+                <div class="metric-secondary">All figures in EUR millions (converted from NOK using NBIM exchange rates)</div>
             </div>
             <div id="cashflowTable">
                 <!-- Dynamic content -->
@@ -808,13 +825,18 @@
         const yearlyData = {"labels":["2021","2023","2024","2025"],"datasets":[{"label":"Investment (€M)","data":[1375,1030,1809,1400],"backgroundColor":"#667eea","borderColor":"#667eea","borderWidth":1}]};
         const technologyData = {"labels":["Offshore Wind","Onshore Wind + Solar","Solar","Diversified"],"datasets":[{"data":[3604,907,203,900],"backgroundColor":["#667eea","#764ba2","#f093fb","#f5576c"],"borderWidth":2,"borderColor":"#fff"}]};
         const geographyData = {"labels":["Netherlands","Germany","Spain & Portugal","Unknown","Denmark","United Kingdom"],"datasets":[{"label":"Investment (€M)","data":[1375,1257,1110,900,573,399],"backgroundColor":"#764ba2","borderColor":"#764ba2","borderWidth":1}]};
-        const cashflowData = {"labels":["2021","2022","2023","2024"],"datasets":[{"label":"New Investments","data":[-14023,0,-2939,-7541],"borderColor":"#f5576c","backgroundColor":"rgba(245, 87, 108, 0.1)","fill":false},{"label":"Operational Cash Flow","data":[0,0,0,0],"borderColor":"#667eea","backgroundColor":"rgba(102, 126, 234, 0.1)","fill":false},{"label":"Receipts Interest","data":[80,162,397,407],"borderColor":"#4facfe","backgroundColor":"rgba(79, 172, 254, 0.1)","fill":false}]};
+        const cashflowData = {"chartData":{"labels":["2021","2022","2023","2024"],"datasets":[{"label":"New Investments","data":[-1398.11,0,-261.94,-641.24],"borderColor":"#f5576c","backgroundColor":"rgba(245, 87, 108, 0.1)","fill":false},{"label":"Operational Cash Flow","data":[72.58,124.17,134.31,89.12],"borderColor":"#667eea","backgroundColor":"rgba(102, 126, 234, 0.1)","fill":false},{"label":"Receipts Interest","data":[7.98,15.41,35.38,34.61],"borderColor":"#4facfe","backgroundColor":"rgba(79, 172, 254, 0.1)","fill":false}]},"allData":[{"year":2021,"period":"1H","currency":"EUR","originalCurrency":"NOK","exchangeRate":10.03,"receipts_interest":0,"receipts_dividends":0,"receipts_interest_div_total":0,"payments_new_investments":-1398.11,"payments_development_assets":0,"receipts_from_ongoing_ops":0,"net_cf_to_from_investments":-1398.11,"net_cf_unlisted_infra":-1398.11,"cash_flow_from_ongoing_ops":0},{"year":2021,"period":"2H","currency":"EUR","originalCurrency":"NOK","exchangeRate":10.03,"receipts_interest":7.98,"receipts_dividends":0,"receipts_interest_div_total":0,"payments_new_investments":0,"payments_development_assets":0,"receipts_from_ongoing_ops":64.61,"net_cf_to_from_investments":64.61,"net_cf_unlisted_infra":72.58,"cash_flow_from_ongoing_ops":72.58},{"year":2022,"period":"1H","currency":"EUR","originalCurrency":"NOK","exchangeRate":10.51,"receipts_interest":9.13,"receipts_dividends":0,"receipts_interest_div_total":0,"payments_new_investments":0,"payments_development_assets":0,"receipts_from_ongoing_ops":35.49,"net_cf_to_from_investments":35.49,"net_cf_unlisted_infra":44.62,"cash_flow_from_ongoing_ops":44.62},{"year":2022,"period":"2H","currency":"EUR","originalCurrency":"NOK","exchangeRate":10.51,"receipts_interest":6.28,"receipts_dividends":0,"receipts_interest_div_total":0,"payments_new_investments":0,"payments_development_assets":0,"receipts_from_ongoing_ops":73.26,"net_cf_to_from_investments":73.26,"net_cf_unlisted_infra":79.54,"cash_flow_from_ongoing_ops":79.54},{"year":2023,"period":"1H","currency":"EUR","originalCurrency":"NOK","exchangeRate":11.22,"receipts_interest":12.75,"receipts_dividends":27.99,"receipts_interest_div_total":0,"payments_new_investments":-235.56,"payments_development_assets":0,"receipts_from_ongoing_ops":64.17,"net_cf_to_from_investments":-171.39,"net_cf_unlisted_infra":-130.66,"cash_flow_from_ongoing_ops":104.9},{"year":2023,"period":"2H","currency":"EUR","originalCurrency":"NOK","exchangeRate":11.22,"receipts_interest":22.64,"receipts_dividends":3.65,"receipts_interest_div_total":0,"payments_new_investments":-26.38,"payments_development_assets":-95.45,"receipts_from_ongoing_ops":3.12,"net_cf_to_from_investments":-118.72,"net_cf_unlisted_infra":-92.42,"cash_flow_from_ongoing_ops":29.41},{"year":2024,"period":"1H","currency":"EUR","originalCurrency":"NOK","exchangeRate":11.76,"receipts_interest":16.92,"receipts_dividends":2.81,"receipts_interest_div_total":0,"payments_new_investments":-420.15,"payments_development_assets":-37.07,"receipts_from_ongoing_ops":23.38,"net_cf_to_from_investments":-433.84,"net_cf_unlisted_infra":-414.12,"cash_flow_from_ongoing_ops":43.11},{"year":2024,"period":"2H","currency":"EUR","originalCurrency":"NOK","exchangeRate":11.76,"receipts_interest":17.69,"receipts_dividends":0,"receipts_interest_div_total":0,"payments_new_investments":-221.09,"payments_development_assets":-20.83,"receipts_from_ongoing_ops":28.32,"net_cf_to_from_investments":-213.61,"net_cf_unlisted_infra":-195.92,"cash_flow_from_ongoing_ops":46},{"year":2025,"period":"1H","currency":"EUR","originalCurrency":"NOK","exchangeRate":11.76,"receipts_interest":21,"receipts_dividends":16.33,"receipts_interest_div_total":0,"payments_new_investments":-1733.59,"payments_development_assets":-22.11,"receipts_from_ongoing_ops":14.8,"net_cf_to_from_investments":-1740.9,"net_cf_unlisted_infra":-1703.57,"cash_flow_from_ongoing_ops":52.13}]};
         const offshoreWindBubbleData = {"datasets":[{"label":"Operational","data":[{"x":2021,"y":3.6569148936170213,"r":5.00666222813829,"name":"Borssele 1 & 2","evPerMW":3.6569148936170213,"acquisitionCost":1375,"enterpriseValue":2750,"totalCapacity":752,"stake":0.5,"geography":"Netherlands","year":2021,"operator":"Ørsted","currentStatus":"Operational "},{"x":2024,"y":1.8570360081205262,"r":4.370354676682432,"name":"Race Bank","evPerMW":1.8570360081205262,"acquisitionCost":399.030612244898,"enterpriseValue":1064.0816326530614,"totalCapacity":573,"stake":0.375,"geography":"United Kingdom","year":2024,"operator":"Ørsted","currentStatus":"Operational "}],"backgroundColor":"rgba(34, 197, 94, 0.7)","borderColor":"#22c55e","borderWidth":2},{"label":"Under Construction","data":[{"x":2023,"y":2.6982931726907626,"r":5.656854249492381,"name":"He Dreiht","evPerMW":2.6982931726907626,"acquisitionCost":430,"enterpriseValue":2590.3614457831322,"totalCapacity":960,"stake":0.166,"geography":"Germany","year":2023,"operator":"EnBW","currentStatus":"Under Construction"},{"x":2025,"y":1.1244113029827314,"r":5.887840577551898,"name":"Thor","evPerMW":1.1244113029827314,"acquisitionCost":573,"enterpriseValue":1169.3877551020407,"totalCapacity":1040,"stake":0.49,"geography":"Denmark","year":2025,"operator":"RWE","currentStatus":"Under Construction"},{"x":2025,"y":1.0548469387755102,"r":7.302967433402215,"name":"Nordseecluster","evPerMW":1.0548469387755102,"acquisitionCost":827,"enterpriseValue":1687.7551020408164,"totalCapacity":1600,"stake":0.49,"geography":"Germany","year":2025,"operator":"RWE","currentStatus":"Under Construction"}],"backgroundColor":"rgba(124, 58, 237, 0.7)","borderColor":"#7c3aed","borderWidth":2},{"label":"Development","data":[],"backgroundColor":"rgba(245, 158, 11, 0.7)","borderColor":"#f59e0b","borderWidth":2}]};
-        const exchangeRatesData = {"lastUpdated":"2025-08-17T13:51:35.431Z","metadata":{"source":"NBIM Financial Statements - Excel Import","baseCurrency":"NOK","description":"Exchange rate assumptions used for portfolio calculations","excelFile":"NBIM_ExchangeRates.xlsx"},"rates":{"NOK_EUR":{"2021":10.03,"2022":10.51,"2023":11.22,"2024":11.76,"2025":11.76},"GBP_NOK":{"2021":11.94,"2022":11.85,"2023":12.95,"2024":14.22,"2025":13.56}},"notes":{"NOK_EUR":"Euro per Norwegian Kroner (EUR/NOK rate)","GBP_NOK":"British Pounds to Norwegian Kroner"}};
+        const exchangeRatesData = {"lastUpdated":"2025-08-27T15:00:30.354Z","metadata":{"source":"NBIM Financial Statements - Excel Import","baseCurrency":"NOK","description":"Exchange rate assumptions used for portfolio calculations","excelFile":"NBIM_ExchangeRates.xlsx"},"rates":{"NOK_EUR":{"2021":10.03,"2022":10.51,"2023":11.22,"2024":11.76,"2025":11.76},"GBP_NOK":{"2021":11.94,"2022":11.85,"2023":12.95,"2024":14.22,"2025":13.56}},"notes":{"NOK_EUR":"Euro per Norwegian Kroner (EUR/NOK rate)","GBP_NOK":"British Pounds to Norwegian Kroner"}};
 
         // Generate technology allocation bars
         function generateTechnologyAllocation() {
             const container = document.getElementById('technologyAllocation');
+            if (!container) {
+                console.log('technologyAllocation container not found, skipping');
+                return;
+            }
+            
             const technologies = technologyData.labels;
             const values = technologyData.datasets[0].data;
             const total = values.reduce((sum, val) => sum + val, 0);
@@ -1088,9 +1110,40 @@
         }
         }
 
+        // Generate inline exchange rates display (compact)
+        function generateInlineExchangeRates() {
+            console.log('generateInlineExchangeRates called');
+            const container = document.getElementById('exchangeRatesInline');
+            console.log('Container element:', container);
+            
+            if (exchangeRatesData && exchangeRatesData.rates && exchangeRatesData.rates.NOK_EUR) {
+                console.log('Exchange rates data found:', exchangeRatesData.rates.NOK_EUR);
+                const rates = [];
+                Object.entries(exchangeRatesData.rates.NOK_EUR).forEach(([year, rate]) => {
+                    const yearNum = parseInt(year);
+                    console.log(`Processing year: ${year}, rate: ${rate}, yearNum: ${yearNum}`);
+                    if (rate && yearNum >= 2021 && yearNum <= 2025) {
+                        console.log(`Adding rate for ${year}: ${rate}`);
+                        rates.push(`<span style="font-weight: 500; color: #374151;">${year}:</span> ${rate}`);
+                    }
+                });
+                console.log('Final rates array:', rates);
+                const finalHTML = rates.join(' <span style="color: #d1d5db;">•</span> ');
+                console.log('Final HTML to insert:', finalHTML);
+                container.innerHTML = finalHTML;
+            } else {
+                console.log('Exchange rates data not available:', exchangeRatesData);
+            }
+        }
+
         // Generate exchange rates display
         function generateExchangeRates() {
             const container = document.getElementById('exchangeRates');
+            if (!container) {
+                console.log('exchangeRates container not found, skipping');
+                return;
+            }
+            
             if (exchangeRatesData && exchangeRatesData.rates && exchangeRatesData.rates.NOK_EUR) {
                 Object.entries(exchangeRatesData.rates.NOK_EUR).forEach(([year, rate]) => {
                     if (rate) {
@@ -1108,9 +1161,68 @@
 
 
 
+        // Generate cashflow table with 1H and 2H periods in EUR
+        function generateCashflowTable() {
+            console.log('Generating cashflow table...');
+            const container = document.getElementById('cashflowTable');
+            if (!container) {
+                console.log('cashflowTable container not found');
+                return;
+            }
+            
+            // Get the processed cashflow data (1H and 2H in EUR)
+            const cashflowData = {"chartData":{"labels":["2021","2022","2023","2024"],"datasets":[{"label":"New Investments","data":[-1398.11,0,-261.94,-641.24],"borderColor":"#f5576c","backgroundColor":"rgba(245, 87, 108, 0.1)","fill":false},{"label":"Operational Cash Flow","data":[72.58,124.17,134.31,89.12],"borderColor":"#667eea","backgroundColor":"rgba(102, 126, 234, 0.1)","fill":false},{"label":"Receipts Interest","data":[7.98,15.41,35.38,34.61],"borderColor":"#4facfe","backgroundColor":"rgba(79, 172, 254, 0.1)","fill":false}]},"allData":[{"year":2021,"period":"1H","currency":"EUR","originalCurrency":"NOK","exchangeRate":10.03,"receipts_interest":0,"receipts_dividends":0,"receipts_interest_div_total":0,"payments_new_investments":-1398.11,"payments_development_assets":0,"receipts_from_ongoing_ops":0,"net_cf_to_from_investments":-1398.11,"net_cf_unlisted_infra":-1398.11,"cash_flow_from_ongoing_ops":0},{"year":2021,"period":"2H","currency":"EUR","originalCurrency":"NOK","exchangeRate":10.03,"receipts_interest":7.98,"receipts_dividends":0,"receipts_interest_div_total":0,"payments_new_investments":0,"payments_development_assets":0,"receipts_from_ongoing_ops":64.61,"net_cf_to_from_investments":64.61,"net_cf_unlisted_infra":72.58,"cash_flow_from_ongoing_ops":72.58},{"year":2022,"period":"1H","currency":"EUR","originalCurrency":"NOK","exchangeRate":10.51,"receipts_interest":9.13,"receipts_dividends":0,"receipts_interest_div_total":0,"payments_new_investments":0,"payments_development_assets":0,"receipts_from_ongoing_ops":35.49,"net_cf_to_from_investments":35.49,"net_cf_unlisted_infra":44.62,"cash_flow_from_ongoing_ops":44.62},{"year":2022,"period":"2H","currency":"EUR","originalCurrency":"NOK","exchangeRate":10.51,"receipts_interest":6.28,"receipts_dividends":0,"receipts_interest_div_total":0,"payments_new_investments":0,"payments_development_assets":0,"receipts_from_ongoing_ops":73.26,"net_cf_to_from_investments":73.26,"net_cf_unlisted_infra":79.54,"cash_flow_from_ongoing_ops":79.54},{"year":2023,"period":"1H","currency":"EUR","originalCurrency":"NOK","exchangeRate":11.22,"receipts_interest":12.75,"receipts_dividends":27.99,"receipts_interest_div_total":0,"payments_new_investments":-235.56,"payments_development_assets":0,"receipts_from_ongoing_ops":64.17,"net_cf_to_from_investments":-171.39,"net_cf_unlisted_infra":-130.66,"cash_flow_from_ongoing_ops":104.9},{"year":2023,"period":"2H","currency":"EUR","originalCurrency":"NOK","exchangeRate":11.22,"receipts_interest":22.64,"receipts_dividends":3.65,"receipts_interest_div_total":0,"payments_new_investments":-26.38,"payments_development_assets":-95.45,"receipts_from_ongoing_ops":3.12,"net_cf_to_from_investments":-118.72,"net_cf_unlisted_infra":-92.42,"cash_flow_from_ongoing_ops":29.41},{"year":2024,"period":"1H","currency":"EUR","originalCurrency":"NOK","exchangeRate":11.76,"receipts_interest":16.92,"receipts_dividends":2.81,"receipts_interest_div_total":0,"payments_new_investments":-420.15,"payments_development_assets":-37.07,"receipts_from_ongoing_ops":23.38,"net_cf_to_from_investments":-433.84,"net_cf_unlisted_infra":-414.12,"cash_flow_from_ongoing_ops":43.11},{"year":2024,"period":"2H","currency":"EUR","originalCurrency":"NOK","exchangeRate":11.76,"receipts_interest":17.69,"receipts_dividends":0,"receipts_interest_div_total":0,"payments_new_investments":-221.09,"payments_development_assets":-20.83,"receipts_from_ongoing_ops":28.32,"net_cf_to_from_investments":-213.61,"net_cf_unlisted_infra":-195.92,"cash_flow_from_ongoing_ops":46},{"year":2025,"period":"1H","currency":"EUR","originalCurrency":"NOK","exchangeRate":11.76,"receipts_interest":21,"receipts_dividends":16.33,"receipts_interest_div_total":0,"payments_new_investments":-1733.59,"payments_development_assets":-22.11,"receipts_from_ongoing_ops":14.8,"net_cf_to_from_investments":-1740.9,"net_cf_unlisted_infra":-1703.57,"cash_flow_from_ongoing_ops":52.13}]};
+            if (!cashflowData || !cashflowData.allData) {
+                console.log('No cashflow EUR data available');
+                return;
+            }
+            
+            // Sort by year and period
+            const sortedData = [...cashflowData.allData].sort((a, b) => {
+                if (a.year !== b.year) return a.year - b.year;
+                return a.period === '1H' ? -1 : 1; // 1H first, then 2H
+            });
+            
+            const tableHTML = `
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Year</th>
+                            <th>Period</th>
+                            <th>Receipts Interest (€M)</th>
+                            <th>Receipts Dividends (€M)</th>
+                            <th>New Investments (€M)</th>
+                            <th>Development Assets (€M)</th>
+                            <th>Loan Repayment (€M)</th>
+                            <th>Exchange Rate (NOK/EUR)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${sortedData.map(cf => `
+                            <tr>
+                                <td><strong>${cf.year}</strong></td>
+                                <td><span style="font-weight: 600; color: ${cf.period === '1H' ? '#1e40af' : '#7c3aed'};">${cf.period}</span></td>
+                                <td class="investment-amount">${cf.receipts_interest ? Math.abs(cf.receipts_interest).toFixed(1) : '0.0'}</td>
+                                <td class="investment-amount">${cf.receipts_dividends ? Math.abs(cf.receipts_dividends).toFixed(1) : '0.0'}</td>
+                                <td class="investment-amount ${cf.payments_new_investments < 0 ? 'text-negative' : 'text-positive'}">${cf.payments_new_investments ? cf.payments_new_investments.toFixed(1) : '0.0'}</td>
+                                <td class="investment-amount ${cf.payments_development_assets < 0 ? 'text-negative' : 'text-positive'}">${cf.payments_development_assets ? cf.payments_development_assets.toFixed(1) : '0.0'}</td>
+                                <td class="investment-amount">${cf.receipts_from_ongoing_ops ? Math.abs(cf.receipts_from_ongoing_ops).toFixed(1) : '0.0'}</td>
+                                <td style="font-size: 0.75rem; color: #64748b;">${cf.exchangeRate || 'N/A'}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+            
+            container.innerHTML = tableHTML;
+            console.log(`Cashflow table generated with ${sortedData.length} rows`);
+        }
+
         // Initialize allocations and rates
         generateTechnologyAllocation();
+        generateInlineExchangeRates();
         generateExchangeRates();
+        generateCashflowTable();
     </script>
 </body>
 </html>

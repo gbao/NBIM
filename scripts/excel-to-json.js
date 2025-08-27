@@ -100,15 +100,15 @@ class ExcelToJsonConverter {
         cashflows: data.map(row => ({
           year: parseInt(row['Year'] || new Date().getFullYear()),
           period: row['Period'] || row['Half'] || 'Full year',
-          receipts_interest: this.parseNumber(row['Receipts Interest'] || row['Interest'] || 0),
-          receipts_dividends: this.parseNumber(row['Receipts Dividends'] || row['Dividends'] || 0),
+          receipts_interest: this.parseNumber(row['Receipts_Interest'] || row['Receipts Interest'] || row['Interest'] || 0),
+          receipts_dividends: this.parseNumber(row['Receipts_Dividends'] || row['Receipts Dividends'] || row['Dividends'] || 0),
           receipts_interest_div_total: this.parseNumber(row['Receipts Total'] || row['Total Receipts'] || 0),
-          payments_new_investments: this.parseNumber(row['New Investments'] || row['Payments New'] || 0),
-          payments_development_assets: this.parseNumber(row['Development Assets'] || row['Development'] || 0),
-          receipts_from_ongoing_ops: this.parseNumber(row['Ongoing Operations'] || row['Operations'] || 0),
-          net_cf_to_from_investments: this.parseNumber(row['Net Investment CF'] || row['Net Investments'] || 0),
-          net_cf_unlisted_infra: this.parseNumber(row['Net Unlisted CF'] || row['Net CF'] || 0),
-          cash_flow_from_ongoing_ops: this.parseNumber(row['Operational CF'] || row['Operations CF'] || 0)
+          payments_new_investments: this.parseNumber(row['New_Investments'] || row['New Investments'] || row['Payments New'] || 0),
+          payments_development_assets: this.parseNumber(row['Development_Assets'] || row['Development Assets'] || row['Development'] || 0),
+          receipts_from_ongoing_ops: this.parseNumber(row['Repayments_loan'] || row['Loan Repayment'] || row['Ongoing Operations'] || row['Operations'] || 0),
+          net_cf_to_from_investments: this.parseNumber(row['Net_Investment CF'] || row['Net Investment CF'] || row['Net Investments'] || 0),
+          net_cf_unlisted_infra: this.parseNumber(row['Net_CF'] || row['Net Unlisted CF'] || row['Net CF'] || 0),
+          cash_flow_from_ongoing_ops: this.parseNumber(row['CF_Ongoing_Ops'] || row['Operational CF'] || row['Operations CF'] || 0)
         }))
       };
 

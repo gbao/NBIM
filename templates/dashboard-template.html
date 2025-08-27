@@ -553,7 +553,7 @@
 
                 <div class="metric-item">
                     <div class="metric-label">AVG. DEPLOYMENT**</div>
-                    <div class="metric-value">{{AVG_DEPLOYMENT}}</div>
+                    <div class="metric-value">€{{AVG_DEPLOYMENT}}</div>
                     <div class="metric-unit">Billion p.a.</div>
                     <div class="metric-change neutral">
                         2021 -2025
@@ -629,11 +629,28 @@
             </div>
         </div>
 
+        <!-- Exchange Rate Assumptions -->
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 16px; margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px;">
+                <div>
+                    <h4 style="font-size: 11px; font-weight: 600; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 8px 0;">Exchange Rate Assumptions (NOK/EUR)</h4>
+                    <div style="display: flex; gap: 16px; align-items: center;">
+                        <div id="exchangeRatesInline" style="display: flex; gap: 12px; font-size: 10px; color: #64748b;">
+                            <!-- Dynamic rates will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+                <div style="font-size: 9px; color: #94a3b8; text-align: right; line-height: 1.3;">
+                    Based on NBIM<br>financial report
+                </div>
+            </div>
+        </div>
+
         <!-- Cashflow Table -->
         <div class="data-table-section">
             <div class="table-header">
                 <div class="table-title">Cash Flow Analysis</div>
-                <div class="metric-secondary">All figures in NOK millions</div>
+                <div class="metric-secondary">All figures in EUR millions (converted from NOK using NBIM exchange rates)</div>
             </div>
             <div id="cashflowTable">
                 <!-- Dynamic content -->
@@ -658,6 +675,11 @@
         // Generate technology allocation bars
         function generateTechnologyAllocation() {
             const container = document.getElementById('technologyAllocation');
+            if (!container) {
+                console.log('technologyAllocation container not found, skipping');
+                return;
+            }
+            
             const technologies = technologyData.labels;
             const values = technologyData.datasets[0].data;
             const total = values.reduce((sum, val) => sum + val, 0);
@@ -931,9 +953,40 @@
         }
         }
 
+        // Generate inline exchange rates display (compact)
+        function generateInlineExchangeRates() {
+            console.log('generateInlineExchangeRates called');
+            const container = document.getElementById('exchangeRatesInline');
+            console.log('Container element:', container);
+            
+            if (exchangeRatesData && exchangeRatesData.rates && exchangeRatesData.rates.NOK_EUR) {
+                console.log('Exchange rates data found:', exchangeRatesData.rates.NOK_EUR);
+                const rates = [];
+                Object.entries(exchangeRatesData.rates.NOK_EUR).forEach(([year, rate]) => {
+                    const yearNum = parseInt(year);
+                    console.log(`Processing year: ${year}, rate: ${rate}, yearNum: ${yearNum}`);
+                    if (rate && yearNum >= 2021 && yearNum <= 2025) {
+                        console.log(`Adding rate for ${year}: ${rate}`);
+                        rates.push(`<span style="font-weight: 500; color: #374151;">${year}:</span> ${rate}`);
+                    }
+                });
+                console.log('Final rates array:', rates);
+                const finalHTML = rates.join(' <span style="color: #d1d5db;">•</span> ');
+                console.log('Final HTML to insert:', finalHTML);
+                container.innerHTML = finalHTML;
+            } else {
+                console.log('Exchange rates data not available:', exchangeRatesData);
+            }
+        }
+
         // Generate exchange rates display
         function generateExchangeRates() {
             const container = document.getElementById('exchangeRates');
+            if (!container) {
+                console.log('exchangeRates container not found, skipping');
+                return;
+            }
+            
             if (exchangeRatesData && exchangeRatesData.rates && exchangeRatesData.rates.NOK_EUR) {
                 Object.entries(exchangeRatesData.rates.NOK_EUR).forEach(([year, rate]) => {
                     if (rate) {
@@ -951,9 +1004,68 @@
 
 
 
+        // Generate cashflow table with 1H and 2H periods in EUR
+        function generateCashflowTable() {
+            console.log('Generating cashflow table...');
+            const container = document.getElementById('cashflowTable');
+            if (!container) {
+                console.log('cashflowTable container not found');
+                return;
+            }
+            
+            // Get the processed cashflow data (1H and 2H in EUR)
+            const cashflowData = {{CASHFLOW_CHART_DATA}};
+            if (!cashflowData || !cashflowData.allData) {
+                console.log('No cashflow EUR data available');
+                return;
+            }
+            
+            // Sort by year and period
+            const sortedData = [...cashflowData.allData].sort((a, b) => {
+                if (a.year !== b.year) return a.year - b.year;
+                return a.period === '1H' ? -1 : 1; // 1H first, then 2H
+            });
+            
+            const tableHTML = `
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Year</th>
+                            <th>Period</th>
+                            <th>Receipts Interest (€M)</th>
+                            <th>Receipts Dividends (€M)</th>
+                            <th>New Investments (€M)</th>
+                            <th>Development Assets (€M)</th>
+                            <th>Loan Repayment (€M)</th>
+                            <th>Exchange Rate (NOK/EUR)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${sortedData.map(cf => `
+                            <tr>
+                                <td><strong>${cf.year}</strong></td>
+                                <td><span style="font-weight: 600; color: ${cf.period === '1H' ? '#1e40af' : '#7c3aed'};">${cf.period}</span></td>
+                                <td class="investment-amount">${cf.receipts_interest ? Math.abs(cf.receipts_interest).toFixed(1) : '0.0'}</td>
+                                <td class="investment-amount">${cf.receipts_dividends ? Math.abs(cf.receipts_dividends).toFixed(1) : '0.0'}</td>
+                                <td class="investment-amount ${cf.payments_new_investments < 0 ? 'text-negative' : 'text-positive'}">${cf.payments_new_investments ? cf.payments_new_investments.toFixed(1) : '0.0'}</td>
+                                <td class="investment-amount ${cf.payments_development_assets < 0 ? 'text-negative' : 'text-positive'}">${cf.payments_development_assets ? cf.payments_development_assets.toFixed(1) : '0.0'}</td>
+                                <td class="investment-amount">${cf.receipts_from_ongoing_ops ? Math.abs(cf.receipts_from_ongoing_ops).toFixed(1) : '0.0'}</td>
+                                <td style="font-size: 0.75rem; color: #64748b;">${cf.exchangeRate || 'N/A'}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+            
+            container.innerHTML = tableHTML;
+            console.log(`Cashflow table generated with ${sortedData.length} rows`);
+        }
+
         // Initialize allocations and rates
         generateTechnologyAllocation();
+        generateInlineExchangeRates();
         generateExchangeRates();
+        generateCashflowTable();
     </script>
 </body>
 </html>
