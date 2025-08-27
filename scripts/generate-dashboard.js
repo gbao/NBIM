@@ -18,12 +18,14 @@ class DashboardGenerator {
       const metrics = this.dataProcessor.calculateMetrics(rawData.acquisitions, rawData.exchangeRates);
       const investmentsTable = this.dataProcessor.processInvestmentsForTable(rawData.acquisitions, rawData.exchangeRates);
       const cashflowData = this.dataProcessor.processCashflowData(rawData.cashflow, rawData.exchangeRates);
+      const cashflowOverview = this.dataProcessor.calculateCashflowOverviewMetrics(cashflowData);
 
       // Generate dashboard HTML
       const dashboardHtml = await this.generateDashboardHtml({
         metrics,
         investments: investmentsTable,
         cashflow: cashflowData,
+        cashflowOverview,
         exchangeRates: rawData.exchangeRates,
         lastUpdated: rawData.acquisitions.lastUpdated
       });
@@ -78,6 +80,11 @@ class DashboardGenerator {
         .replace(/{{OFFSHORE_OPERATIONAL_GW}}/g, Math.round(data.metrics.offshoreOperationalCapacity).toString())
         .replace(/{{OFFSHORE_CAPACITY}}/g, Math.round(data.metrics.offshoreCapacityByStake).toString())
         .replace(/{{OPERATIONAL_PERCENTAGE}}/g, Math.round(data.metrics.operationalPercentage).toString())
+        .replace(/{{TOTAL_NEW_INVESTMENTS}}/g, data.cashflowOverview.totalNewInvestments)
+        .replace(/{{TOTAL_INTEREST_RECEIPTS}}/g, data.cashflowOverview.totalInterestReceipts)
+        .replace(/{{TOTAL_RECEIPTS_DIVIDENDS}}/g, data.cashflowOverview.totalReceiptsDividends)
+        .replace(/{{TOTAL_DEVELOPMENT_ASSETS}}/g, data.cashflowOverview.totalDevelopmentAssets)
+        .replace(/{{TOTAL_LOAN_REPAYMENTS}}/g, data.cashflowOverview.totalLoanRepayments)
         .replace(/{{INVESTMENTS_TABLE}}/g, this.generateInvestmentsTable(data.investments))
         .replace(/{{YEARLY_CHART_DATA}}/g, JSON.stringify(this.prepareYearlyChartData(data.metrics.yearlyInvestments)))
         .replace(/{{TECHNOLOGY_CHART_DATA}}/g, JSON.stringify(this.prepareTechnologyChartData(data.metrics.technologyBreakdown)))

@@ -332,6 +332,64 @@ class DataProcessor {
     };
   }
 
+  calculateCashflowOverviewMetrics(cashflowData) {
+    console.log('🔢 Calculating cashflow overview metrics...');
+    
+    if (!cashflowData || !cashflowData.allData) {
+      console.log('⚠️ No cashflow data available for overview metrics');
+      return {
+        totalNewInvestments: '0.0',
+        totalInterestReceipts: '0.0', 
+        totalReceiptsDividends: '0.0',
+        totalDevelopmentAssets: '0.0',
+        totalLoanRepayments: '0.0'
+      };
+    }
+    
+    let totalNewInvestments = 0;
+    let totalInterestReceipts = 0;
+    let totalReceiptsDividends = 0;
+    let totalDevelopmentAssets = 0;
+    let totalLoanRepayments = 0;
+    
+    cashflowData.allData.forEach(cf => {
+      // Sum negative new investments (outflows)
+      if (cf.payments_new_investments && cf.payments_new_investments < 0) {
+        totalNewInvestments += Math.abs(cf.payments_new_investments);
+      }
+      
+      // Sum positive interest receipts
+      if (cf.receipts_interest && cf.receipts_interest > 0) {
+        totalInterestReceipts += cf.receipts_interest;
+      }
+      
+      // Sum positive dividend receipts
+      if (cf.receipts_dividends && cf.receipts_dividends > 0) {
+        totalReceiptsDividends += cf.receipts_dividends;
+      }
+      
+      // Sum negative development assets (outflows for construction)
+      if (cf.payments_development_assets && cf.payments_development_assets < 0) {
+        totalDevelopmentAssets += Math.abs(cf.payments_development_assets);
+      }
+      
+      // Sum positive loan repayments
+      if (cf.receipts_from_ongoing_ops && cf.receipts_from_ongoing_ops > 0) {
+        totalLoanRepayments += cf.receipts_from_ongoing_ops;
+      }
+    });
+    
+    console.log(`💰 Cashflow Overview: New Investments: ${totalNewInvestments.toFixed(1)}M EUR, Interest: ${totalInterestReceipts.toFixed(1)}M EUR, Dividends: ${totalReceiptsDividends.toFixed(1)}M EUR, Development: ${totalDevelopmentAssets.toFixed(1)}M EUR, Repayments: ${totalLoanRepayments.toFixed(1)}M EUR`);
+    
+    return {
+      totalNewInvestments: totalNewInvestments.toFixed(1),
+      totalInterestReceipts: totalInterestReceipts.toFixed(1),
+      totalReceiptsDividends: totalReceiptsDividends.toFixed(1),
+      totalDevelopmentAssets: totalDevelopmentAssets.toFixed(1),
+      totalLoanRepayments: totalLoanRepayments.toFixed(1)
+    };
+  }
+
   async saveProcessedData(data) {
     const outputPath = path.join(__dirname, '../public/api/data.json');
     await fs.mkdir(path.dirname(outputPath), { recursive: true });
