@@ -943,7 +943,7 @@
                     
                     // Format text according to requested pattern: (Name, Capacity) - EV/MW
                     const projectName = data.name.length > 15 ? data.name.substring(0, 15) + '...' : data.name;
-                    const labelText = `(${projectName}, ${nbimCapacity} MW) - ${data.evPerMW.toFixed(1)}M/MW`;
+                    const labelText = `(${projectName}, ${nbimCapacity} MW) - ${data.evPerMW.toFixed(2)}M/MW`;
                     
                     // Position text based on side
                     let textX, textAlign;
