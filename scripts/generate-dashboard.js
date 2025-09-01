@@ -91,7 +91,8 @@ class DashboardGenerator {
         .replace(/{{GEOGRAPHY_CHART_DATA}}/g, JSON.stringify(this.prepareGeographyChartData(data.metrics.geographyBreakdown)))
         .replace(/{{CASHFLOW_CHART_DATA}}/g, JSON.stringify({
           chartData: this.prepareCashflowChartData(data.cashflow.fullYearData),
-          allData: data.cashflow.allData
+          allData: data.cashflow.allData,
+          allDataNOK: data.cashflow.allDataNOK
         }))
         .replace(/{{OFFSHORE_BUBBLE_CHART_DATA}}/g, JSON.stringify(this.prepareOffshoreWindBubbleData(data.investments)))
         .replace(/{{EXCHANGE_RATES_DATA}}/g, JSON.stringify(data.exchangeRates));

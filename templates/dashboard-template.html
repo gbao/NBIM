@@ -571,6 +571,29 @@
                 font-size: 1.25rem;
             }
         }
+
+        .currency-toggle {
+            padding: 0.5rem 1rem;
+            border: 1px solid #e2e8f0;
+            background: white;
+            color: #64748b;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .currency-toggle:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+
+        .currency-toggle.active {
+            background: #1e40af;
+            color: white;
+            border-color: #1e40af;
+        }
     </style>
 </head>
 <body>
@@ -780,8 +803,16 @@
         <!-- Cashflow Table -->
         <div class="data-table-section">
             <div class="table-header">
-                <div class="table-title">Cash Flow Analysis</div>
-                <div class="metric-secondary">All figures in EUR millions (converted from NOK using NBIM exchange rates)</div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <div class="table-title">Cash Flow Analysis</div>
+                        <div class="metric-secondary" id="currencyDescription">All figures in EUR millions (converted from NOK using NBIM exchange rates)</div>
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <button id="eurToggle" class="currency-toggle active" onclick="switchCurrency('EUR')">EUR</button>
+                        <button id="nokToggle" class="currency-toggle" onclick="switchCurrency('NOK')">NOK</button>
+                    </div>
+                </div>
             </div>
             <div id="cashflowTable">
                 <!-- Dynamic content -->
@@ -1135,24 +1166,29 @@
 
 
 
-        // Generate cashflow table with 1H and 2H periods in EUR
-        function generateCashflowTable() {
-            console.log('Generating cashflow table...');
+        // Store both EUR and NOK data globally for currency switching
+        let currentCurrency = 'EUR';
+
+        // Generate cashflow table with currency toggle support
+        function generateCashflowTable(currency = 'EUR') {
+            console.log('Generating cashflow table in', currency);
             const container = document.getElementById('cashflowTable');
             if (!container) {
                 console.log('cashflowTable container not found');
                 return;
             }
             
-            // Get the processed cashflow data (1H and 2H in EUR)
-            const cashflowData = {{CASHFLOW_CHART_DATA}};
-            if (!cashflowData || !cashflowData.allData) {
-                console.log('No cashflow EUR data available');
+            if (!cashflowData || (!cashflowData.allData && !cashflowData.allDataNOK)) {
+                console.log('No cashflow data available');
                 return;
             }
             
+            // Choose data based on currency
+            const dataToUse = currency === 'EUR' ? cashflowData.allData : cashflowData.allDataNOK;
+            const eurDataForRates = cashflowData.allData; // Always use EUR data for exchange rates
+            
             // Sort by year and period
-            const sortedData = [...cashflowData.allData].sort((a, b) => {
+            const sortedData = [...dataToUse].sort((a, b) => {
                 if (a.year !== b.year) return a.year - b.year;
                 return a.period === '1H' ? -1 : 1; // 1H first, then 2H
             });
@@ -1163,16 +1199,21 @@
                         <tr>
                             <th>Year</th>
                             <th>Period</th>
-                            <th>Receipts Interest (€M)</th>
-                            <th>Receipts Dividends (€M)</th>
-                            <th>New Investments (€M)</th>
-                            <th>Development Assets (€M)</th>
-                            <th>Loan Repayment (€M)</th>
+                            <th>Receipts Interest</th>
+                            <th>Receipts Dividends</th>
+                            <th>New Investments</th>
+                            <th>Development Assets</th>
+                            <th>Loan Repayment</th>
                             <th>Exchange Rate (NOK/EUR)</th>
                         </tr>
                     </thead>
                     <tbody>
-                        ${sortedData.map(cf => `
+                        ${sortedData.map((cf, index) => {
+                            // Find matching EUR data for exchange rate (same year and period)
+                            const eurMatch = eurDataForRates.find(eur => eur.year === cf.year && eur.period === cf.period);
+                            const exchangeRate = eurMatch ? eurMatch.exchangeRate : 'N/A';
+                            
+                            return `
                             <tr>
                                 <td><strong>${cf.year}</strong></td>
                                 <td><span style="font-weight: 600; color: ${cf.period === '1H' ? '#1e40af' : '#7c3aed'};">${cf.period}</span></td>
@@ -1181,15 +1222,36 @@
                                 <td class="investment-amount ${cf.payments_new_investments < 0 ? 'text-negative' : 'text-positive'}">${cf.payments_new_investments ? cf.payments_new_investments.toFixed(1) : '0.0'}</td>
                                 <td class="investment-amount ${cf.payments_development_assets < 0 ? 'text-negative' : 'text-positive'}">${cf.payments_development_assets ? cf.payments_development_assets.toFixed(1) : '0.0'}</td>
                                 <td class="investment-amount">${cf.receipts_from_ongoing_ops ? Math.abs(cf.receipts_from_ongoing_ops).toFixed(1) : '0.0'}</td>
-                                <td style="font-size: 0.75rem; color: #64748b;">${cf.exchangeRate || 'N/A'}</td>
+                                <td style="font-size: 0.75rem; color: #64748b;">${exchangeRate}</td>
                             </tr>
-                        `).join('')}
+                            `;
+                        }).join('')}
                     </tbody>
                 </table>
             `;
             
             container.innerHTML = tableHTML;
-            console.log(`Cashflow table generated with ${sortedData.length} rows`);
+            console.log(`Cashflow table generated with ${sortedData.length} rows in ${currency}`);
+        }
+
+        // Currency toggle function
+        function switchCurrency(currency) {
+            currentCurrency = currency;
+            
+            // Update button states
+            document.getElementById('eurToggle').classList.toggle('active', currency === 'EUR');
+            document.getElementById('nokToggle').classList.toggle('active', currency === 'NOK');
+            
+            // Update description
+            const description = document.getElementById('currencyDescription');
+            if (currency === 'EUR') {
+                description.textContent = 'All figures in EUR millions (converted from NOK using NBIM exchange rates)';
+            } else {
+                description.textContent = 'All figures in NOK millions (original currency)';
+            }
+            
+            // Regenerate table with new currency
+            generateCashflowTable(currency);
         }
 
         // Initialize allocations and rates

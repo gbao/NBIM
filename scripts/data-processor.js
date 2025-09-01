@@ -328,7 +328,8 @@ class DataProcessor {
     
     return {
       fullYearData: eurFullYearData, // For charts (Full Year data in EUR)
-      allData: eurData // All 1H and 2H periods in EUR
+      allData: eurData, // All 1H and 2H periods in EUR
+      allDataNOK: nokDataWithH2 // All 1H and 2H periods in NOK (original)
     };
   }
 
