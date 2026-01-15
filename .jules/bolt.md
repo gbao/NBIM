@@ -1,0 +1,3 @@
+## 2024-05-23 - Parallel Processing Overhead vs Benefits for Small Datasets
+**Learning:** For very small datasets (< 20KB files), the overhead of Node.js startup and module loading dominates the execution time. Parallelizing file I/O and processing using `Promise.all` + `fs.readFile` (async) vs sequential `XLSX.readFile` (sync) showed negligible wall-clock time improvement (approx ~0.47s for both).
+**Action:** While parallelization is architecturally superior and scalable, do not expect massive performance gains on small test datasets. Always benchmark with realistic data sizes if possible to prove impact.
