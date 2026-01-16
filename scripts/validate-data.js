@@ -12,9 +12,13 @@ class DataValidator {
     console.log('🔍 Starting data validation...');
     
     try {
-      await this.validateAcquisitions();
-      await this.validateCashflow();
-      await this.validateExchangeRates();
+      // ⚡ Bolt: Execute validations in parallel to improve performance
+      // Each validation is independent and I/O bound
+      await Promise.all([
+        this.validateAcquisitions(),
+        this.validateCashflow(),
+        this.validateExchangeRates()
+      ]);
       
       this.printResults();
       
