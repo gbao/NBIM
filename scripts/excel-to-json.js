@@ -12,7 +12,9 @@ class ExcelToJsonConverter {
     console.log('📊 Converting NBIM_Acquisitions.xlsx...');
     
     try {
-      const workbook = XLSX.readFile(path.join(this.excelDir, 'NBIM_Acquisitions.xlsx'));
+      const filePath = path.join(this.excelDir, 'NBIM_Acquisitions.xlsx');
+      const fileBuffer = await fs.readFile(filePath);
+      const workbook = XLSX.read(fileBuffer, { type: 'buffer' });
       const worksheet = workbook.Sheets[workbook.SheetNames[0]];
       const data = XLSX.utils.sheet_to_json(worksheet);
 
@@ -81,7 +83,9 @@ class ExcelToJsonConverter {
     console.log('💰 Converting NBIM_Cashflow.xlsx...');
     
     try {
-      const workbook = XLSX.readFile(path.join(this.excelDir, 'NBIM_Cashflow.xlsx'));
+      const filePath = path.join(this.excelDir, 'NBIM_Cashflow.xlsx');
+      const fileBuffer = await fs.readFile(filePath);
+      const workbook = XLSX.read(fileBuffer, { type: 'buffer' });
       const worksheet = workbook.Sheets[workbook.SheetNames[0]];
       const data = XLSX.utils.sheet_to_json(worksheet);
 
@@ -126,7 +130,9 @@ class ExcelToJsonConverter {
     console.log('💱 Converting NBIM_ExchangeRates.xlsx...');
     
     try {
-      const workbook = XLSX.readFile(path.join(this.excelDir, 'NBIM_ExchangeRates.xlsx'));
+      const filePath = path.join(this.excelDir, 'NBIM_ExchangeRates.xlsx');
+      const fileBuffer = await fs.readFile(filePath);
+      const workbook = XLSX.read(fileBuffer, { type: 'buffer' });
       const worksheet = workbook.Sheets[workbook.SheetNames[0]];
       const data = XLSX.utils.sheet_to_json(worksheet);
 
@@ -204,9 +210,11 @@ class ExcelToJsonConverter {
     try {
       console.log('🔄 Starting Excel to JSON conversion...');
       
-      await this.convertAcquisitions();
-      await this.convertCashflow();
-      await this.convertExchangeRates();
+      await Promise.all([
+        this.convertAcquisitions(),
+        this.convertCashflow(),
+        this.convertExchangeRates()
+      ]);
       
       console.log('🎉 All Excel files converted successfully!');
       console.log('📁 JSON files saved to: data/json/');
