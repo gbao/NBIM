@@ -65,37 +65,44 @@ class DashboardGenerator {
         timeZoneName: 'short'
       });
       
-      // Replace template variables
-      return template
-        .replace(/{{LAST_UPDATED}}/g, lastUpdated)
-        .replace(/{{TOTAL_INVESTMENT}}/g, this.formatCurrencyWithoutUnit(data.metrics.totalInvestmentEur))
-        .replace(/{{TOTAL_PROJECTS}}/g, data.metrics.totalProjects.toString())
-        .replace(/{{TOTAL_CAPACITY_ALL}}/g, Math.round(data.metrics.totalCapacityAll).toString())
-        .replace(/{{TOTAL_CAPACITY}}/g, Math.round(data.metrics.totalCapacityByStake).toString())
-        .replace(/{{AVG_DEPLOYMENT}}/g, (data.metrics.avgInvestmentPerYear / 1000).toFixed(2))
-        .replace(/{{OFFSHORE_INVESTMENT}}/g, this.formatCurrency(data.metrics.offshoreInvestmentEur))
-        .replace(/{{OFFSHORE_PERCENTAGE}}/g, Math.round(data.metrics.offshorePercentageOfTotal).toString())
-        .replace(/{{OFFSHORE_OPERATIONAL_PERCENTAGE}}/g, Math.round(data.metrics.offshoreOperationalPercentage).toString())
-        .replace(/{{OFFSHORE_CAPACITY_GW}}/g, Math.round(data.metrics.offshoreCapacityByStake).toString())
-        .replace(/{{OFFSHORE_OPERATIONAL_GW}}/g, Math.round(data.metrics.offshoreOperationalCapacity).toString())
-        .replace(/{{OFFSHORE_CAPACITY}}/g, Math.round(data.metrics.offshoreCapacityByStake).toString())
-        .replace(/{{OPERATIONAL_PERCENTAGE}}/g, Math.round(data.metrics.operationalPercentage).toString())
-        .replace(/{{TOTAL_NEW_INVESTMENTS}}/g, data.cashflowOverview.totalNewInvestments)
-        .replace(/{{TOTAL_INTEREST_RECEIPTS}}/g, data.cashflowOverview.totalInterestReceipts)
-        .replace(/{{TOTAL_RECEIPTS_DIVIDENDS}}/g, data.cashflowOverview.totalReceiptsDividends)
-        .replace(/{{TOTAL_DEVELOPMENT_ASSETS}}/g, data.cashflowOverview.totalDevelopmentAssets)
-        .replace(/{{TOTAL_LOAN_REPAYMENTS}}/g, data.cashflowOverview.totalLoanRepayments)
-        .replace(/{{INVESTMENTS_TABLE}}/g, this.generateInvestmentsTable(data.investments))
-        .replace(/{{YEARLY_CHART_DATA}}/g, JSON.stringify(this.prepareYearlyChartData(data.metrics.yearlyInvestments)))
-        .replace(/{{TECHNOLOGY_CHART_DATA}}/g, JSON.stringify(this.prepareTechnologyChartData(data.metrics.technologyBreakdown)))
-        .replace(/{{GEOGRAPHY_CHART_DATA}}/g, JSON.stringify(this.prepareGeographyChartData(data.metrics.geographyBreakdown)))
-        .replace(/{{CASHFLOW_CHART_DATA}}/g, JSON.stringify({
+      // Performance optimization: Single-pass regex replacement
+      // This avoids creating multiple intermediate strings and prevents potential issues with special characters in replacement values
+      const replacements = {
+        '{{LAST_UPDATED}}': lastUpdated,
+        '{{TOTAL_INVESTMENT}}': this.formatCurrencyWithoutUnit(data.metrics.totalInvestmentEur),
+        '{{TOTAL_PROJECTS}}': data.metrics.totalProjects.toString(),
+        '{{TOTAL_CAPACITY_ALL}}': Math.round(data.metrics.totalCapacityAll).toString(),
+        '{{TOTAL_CAPACITY}}': Math.round(data.metrics.totalCapacityByStake).toString(),
+        '{{AVG_DEPLOYMENT}}': (data.metrics.avgInvestmentPerYear / 1000).toFixed(2),
+        '{{OFFSHORE_INVESTMENT}}': this.formatCurrency(data.metrics.offshoreInvestmentEur),
+        '{{OFFSHORE_PERCENTAGE}}': Math.round(data.metrics.offshorePercentageOfTotal).toString(),
+        '{{OFFSHORE_OPERATIONAL_PERCENTAGE}}': Math.round(data.metrics.offshoreOperationalPercentage).toString(),
+        '{{OFFSHORE_CAPACITY_GW}}': Math.round(data.metrics.offshoreCapacityByStake).toString(),
+        '{{OFFSHORE_OPERATIONAL_GW}}': Math.round(data.metrics.offshoreOperationalCapacity).toString(),
+        '{{OFFSHORE_CAPACITY}}': Math.round(data.metrics.offshoreCapacityByStake).toString(),
+        '{{OPERATIONAL_PERCENTAGE}}': Math.round(data.metrics.operationalPercentage).toString(),
+        '{{TOTAL_NEW_INVESTMENTS}}': data.cashflowOverview.totalNewInvestments,
+        '{{TOTAL_INTEREST_RECEIPTS}}': data.cashflowOverview.totalInterestReceipts,
+        '{{TOTAL_RECEIPTS_DIVIDENDS}}': data.cashflowOverview.totalReceiptsDividends,
+        '{{TOTAL_DEVELOPMENT_ASSETS}}': data.cashflowOverview.totalDevelopmentAssets,
+        '{{TOTAL_LOAN_REPAYMENTS}}': data.cashflowOverview.totalLoanRepayments,
+        '{{INVESTMENTS_TABLE}}': this.generateInvestmentsTable(data.investments),
+        '{{YEARLY_CHART_DATA}}': JSON.stringify(this.prepareYearlyChartData(data.metrics.yearlyInvestments)),
+        '{{TECHNOLOGY_CHART_DATA}}': JSON.stringify(this.prepareTechnologyChartData(data.metrics.technologyBreakdown)),
+        '{{GEOGRAPHY_CHART_DATA}}': JSON.stringify(this.prepareGeographyChartData(data.metrics.geographyBreakdown)),
+        '{{CASHFLOW_CHART_DATA}}': JSON.stringify({
           chartData: this.prepareCashflowChartData(data.cashflow.fullYearData),
           allData: data.cashflow.allData,
           allDataNOK: data.cashflow.allDataNOK
-        }))
-        .replace(/{{OFFSHORE_BUBBLE_CHART_DATA}}/g, JSON.stringify(this.prepareOffshoreWindBubbleData(data.investments)))
-        .replace(/{{EXCHANGE_RATES_DATA}}/g, JSON.stringify(data.exchangeRates));
+        }),
+        '{{OFFSHORE_BUBBLE_CHART_DATA}}': JSON.stringify(this.prepareOffshoreWindBubbleData(data.investments)),
+        '{{EXCHANGE_RATES_DATA}}': JSON.stringify(data.exchangeRates)
+      };
+
+      // Use a callback function for replacement to handle special characters (like '$') safely
+      return template.replace(/{{[A-Z_]+}}/g, (match) => {
+        return replacements.hasOwnProperty(match) ? replacements[match] : match;
+      });
         
     } catch (error) {
       // If template doesn't exist, create a basic dashboard
