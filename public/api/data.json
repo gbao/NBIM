@@ -382,7 +382,7 @@
     }
   ],
   "exchangeRates": {
-    "lastUpdated": "2026-09-28T17:27:13.335Z",
+    "lastUpdated": "2026-10-05T18:05:42.309Z",
     "metadata": {
       "source": "NBIM Financial Statements - Excel Import",
       "baseCurrency": "NOK",
@@ -410,5 +410,5 @@
       "GBP_NOK": "British Pounds to Norwegian Kroner"
     }
   },
-  "lastUpdated": "2026-09-28T17:27:13.312Z"
+  "lastUpdated": "2026-10-05T18:05:42.129Z"
 }
